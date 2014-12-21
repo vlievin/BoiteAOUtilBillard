@@ -6,12 +6,65 @@
 DEFINTION DE myVecteur2D
 */
 
-myVecteur2D::myVecteur2D(float x, float y) : xdir(x), ydir(y){
+myVecteur2D::myVecteur2D(){}
+
+myVecteur2D::myVecteur2D(float x, float y) {
+	xdir = x;
+	ydir = y;
 	normalise();
 }
-myVecteur2D::myVecteur2D(float x, float y, vertex point) : xdir(x), ydir(y), origin(point){
+myVecteur2D::myVecteur2D(float x, float y, vertex point) :  origin(point){
+	xdir = x;
+	ydir = y;
 	normalise();
 }
+/*
+myVecteur2D::myVecteur2D(myVecteur2D* v1, myVecteur2D* v2){ // créer un rebond : premier vecteur sur le deuxième
+
+	vertex originrebond;
+	originrebond.x = 0;
+	originrebond.y = 0;
+
+	int sens;
+
+	sens = intersectionDroites(v1, v2, originrebond);
+
+	if (sens > 0)
+	{
+	v1->normalise();
+	v2->normalise();
+	std::cout << "V1 : " << v1->getNorme() << "  v2 : " << v2->getNorme() << " v1x : " << v1->getxdir() << " v1y : " << v1->getydir() << " v2x : " << v2->getxdir() << " v2y : " << v2->getydir() << std::endl;
+
+	//std::cout << "ps : " << produitscalaire(v1, v2) << std::endl;
+		float alpha = acos(abs(produitscalaire(v1, v2))); // TODO : prendre en compte la valeur négative ou poistive de l'angle
+		
+		
+		
+		//if (produitscalaire(v1, v2) < 0)
+			alpha = -alpha;
+		std::cout << "alpha : " << alpha << " deg " << alpha * 360 / (2 * 3.14f) << std::endl;
+
+		vertex dirOrtho; //défini le vecteur orthogonal au vecteur v2
+		dirOrtho.x =  v2->getydir();
+		dirOrtho.y = - v2->getxdir();
+		this -> origin = originrebond;
+		this -> xdir = cos(alpha)*v2->getxdir() + sin(alpha)*dirOrtho.x;
+		this -> ydir = sin(alpha)*dirOrtho.y + sin(alpha) * v2->getydir();
+		
+		//xdir = dirOrtho.x;
+		//ydir = dirOrtho.y;
+		std::cout << "vec : " << getNorme() << std::endl;
+		this -> normalise();
+		std::cout << "vec : " << getNorme() << std::endl;
+	}
+	else
+	{
+
+	}
+	
+
+}
+*/
 
 myVecteur2D::myVecteur2D(myVecteur2D* v1, myVecteur2D* v2){ // créer un rebond : premier vecteur sur le deuxième
 
@@ -23,37 +76,85 @@ myVecteur2D::myVecteur2D(myVecteur2D* v1, myVecteur2D* v2){ // créer un rebond :
 
 	sens = intersectionDroites(v1, v2, originrebond);
 
-	//if (sens > 0)
-	//{
+
+	if (sens > 0)
+	{
+		v1->normalise();
+		v2->normalise();
+		std::cout << "V1 : " << v1->getNorme() << "  v2 : " << v2->getNorme() << " v1x : " << v1->getxdir() << " v1y : " << v1->getydir() << " v2x : " << v2->getxdir() << " v2y : " << v2->getydir() << std::endl;
 		
-	std::cout << "ps : " << produitscalaire(v1, v2) << std::endl;
-		float alpha = acos(abs(produitscalaire(v1, v2))); // TODO : prendre en compte la valeur négative ou poistive de l'angle
+		vertex dirOrtho;
+		dirOrtho.x =  v2->getydir();
+		dirOrtho.y = - v2->getxdir();
+
+		float psv12 = produitscalaire(v1,v2); //produit scalaire de v1 sur v2
+		float psv12ortho = v1->getxdir() * dirOrtho.x + v1->getydir() * dirOrtho.y;
 
 		
-		if (produitVectoriel(v1, v2) < 0)
-			alpha = -alpha;
-		std::cout << "alpha : " << alpha << std::endl;
 
-		vertex dirOrtho; //défini le vecteur orthogonal au vecteur v2
-		dirOrtho.x = - v2->getydir();
-		dirOrtho.y =  v2->getxdir();
+		xdir = psv12*v2->getxdir() - psv12ortho * dirOrtho.x;
+		ydir = psv12*v2->getydir() - psv12ortho * dirOrtho.y;
 		origin = originrebond;
-		xdir = cos(alpha)*v2->getxdir() + sin(alpha)*dirOrtho.x;
-		ydir = sin(alpha)*dirOrtho.y + sin(alpha) * v2->getydir();
 
-		//xdir = dirOrtho.x;
-		//ydir = dirOrtho.y;
+		std::cout << "psv12 : " << psv12 << "  ortho " << psv12ortho << "xdir : " << xdir << "direct " << psv12*v2->getxdir() + psv12ortho * dirOrtho.x<< std::endl;
 
 		normalise();
+		
+	}
+	else
+	{
+
+	}
+
+
+}
+
+/*
+void myVecteur2D::setRebond(myVecteur2D* v1, myVecteur2D* v2){ // créer un rebond : premier vecteur sur le deuxième
+
+	vertex originrebond;
+	originrebond.x = 0;
+	originrebond.y = 0;
+
+	int sens;
+
+	sens = intersectionDroites(v1, v2, originrebond);
+
+	//if (sens > 0)
+	//{
+	v1->normalise();
+	v2->normalise();
+	std::cout << "V1 : " << v1->getNorme() << "  v2 : " << v2->getNorme() << std::endl;
+
+	std::cout << "ps : " << produitscalaire(v1, v2) << std::endl;
+	float alpha = acos(abs(produitscalaire(v1, v2))); // TODO : prendre en compte la valeur négative ou poistive de l'angle
+
+
+	if (produitVectoriel(v1, v2) < 0)
+		alpha = -alpha;
+	std::cout << "alpha : " << alpha << std::endl;
+
+	vertex dirOrtho; //défini le vecteur orthogonal au vecteur v2
+	dirOrtho.x = -v2->getydir();
+	dirOrtho.y = v2->getxdir();
+	this->origin = originrebond;
+	this->xdir = cos(alpha)*v2->getxdir() + sin(alpha)*dirOrtho.x;
+	this->ydir = sin(alpha)*dirOrtho.y + sin(alpha) * v2->getydir();
+
+	//xdir = dirOrtho.x;
+	//ydir = dirOrtho.y;
+	std::cout << "vec : " << getNorme() << std::endl;
+	this->normalise();
+	std::cout << "vec : " << getNorme() << std::endl;
 	/*}
 	else
 	{
 
 	}
-	*/
+	
 
 }
-
+*/
 myVecteur2D::~myVecteur2D() {
 
 }
@@ -81,11 +182,16 @@ vertex myVecteur2D::getorigin() const {
 }
 
 void myVecteur2D::normalise(){
-	if (xdir != 0.0f &&ydir != 0.0f)
+	if (getNorme()==0)
 	{
-		float norm = sqrt(xdir*xdir + ydir*ydir);
+		std::cout << "vecteur nul" << std::endl;
+	}
+	else 
+	{ 
+		float norm = sqrt(abs(xdir*xdir + ydir*ydir));
 		xdir = xdir / norm;
 		ydir = ydir / norm;
+		std::cout << "vecteur non nul : "<< getNorme() << std::endl;
 	}
 }
 
@@ -126,10 +232,11 @@ DEFINITION DE cadre
 cadre::cadre(){}
 
 cadre::cadre(myVecteur2D* a, myVecteur2D* b, myVecteur2D* c, myVecteur2D* d)   {
-	bords[0] = a;
-	bords[1] = b;
-	bords[2] = c;
-	bords[3] = d;
+	bords.push_back(a);
+	bords.push_back(b);
+	bords.push_back(c);
+	bords.push_back(d);
+	
 }
 
 cadre::cadre(vertex a, vertex b, vertex c, vertex d)   {
@@ -141,10 +248,10 @@ cadre::cadre(vertex a, vertex b, vertex c, vertex d)   {
 	vc = new myVecteur2D(d.x - c.x, d.y - c.y, c);
 	myVecteur2D* vd;
 	vd = new myVecteur2D(a.x - d.x, a.y - d.y, d);
-	bords[0] = va;
-	bords[1] = vb;
-	bords[2] = vc;
-	bords[3] = vd;
+	bords.push_back(va);
+	bords.push_back(vb);
+	bords.push_back(vc);
+	bords.push_back(vd);
 }
 
 myVecteur2D* cadre::getBords(int i) const{
@@ -155,17 +262,39 @@ vertex cadre::getcoins(int i) const{
 	return bords[i]->getorigin();
 }
 
-void cadre::afficherGL()const{
-	glBegin(GL_LINES);
+void cadre::afficherVecteursGL()const{
+	
+	//for (std::vector<myVecteur2D*>::iterator it = bords.begin(); it != bords->end(); ++it){
+		//(*it)->afficherGL();
+	//}
+
+	for (int i = 0; i < bords.size(); i++)
+	{
+		bords[i]->afficherGL(0.3f);
+	}
+
+	/*glBegin(GL_LINES);
 	for (int i = 0; i<3; i++){
 		glVertex2f(getcoins(i).x, getcoins(i).y);
 		glVertex2f(getcoins(i+1).x, getcoins(i + 1).y);
 	}
 	glVertex2f(getcoins(3).x, getcoins(3).y);
 	glVertex2f(getcoins(0).x, getcoins(0).y);
-	glEnd();
+	glEnd();*/
 	//debug 
 	//std::cout << "affichage du cadre" << std::endl;
+}
+
+void cadre::afficherGL() const{
+	glColor3f(1.0f, 1.0f, 1.0f);
+	glBegin(GL_LINES);
+	for (int i = 0; i<3; i++){
+		glVertex2f(getcoins(i).x, getcoins(i).y);
+		glVertex2f(getcoins(i + 1).x, getcoins(i + 1).y);
+	}
+	glVertex2f(getcoins(3).x, getcoins(3).y);
+	glVertex2f(getcoins(0).x, getcoins(0).y);
+	glEnd();
 }
 
 void cadre::setBords(int i, myVecteur2D* vector){ // TODO : refermeture du cadre
@@ -200,7 +329,34 @@ int cadre::getBordVise(myVecteur2D* vec) const{
 		return bord;
 }
 
+std::vector<myVecteur2D*> cadre::rebonds(myVecteur2D* v ,int nb)const{
+	std::vector<myVecteur2D*> result;
+	myVecteur2D* tmp;
+	tmp = v;
+	for (int i = 0; i < nb; i++)
+	{
 
+		for (int j = 0; j < bords.size(); j++){
+			int l = j + 1;
+			if (l > 3)
+			{
+				l = 0;
+			}
+			vertex* inter;
+			inter = new vertex;
+			int dir = intersectionDroites(tmp, getBords(j), *inter);
+			if (dir > 0 && appartientSegment(*inter, getBords(j)->getorigin(), getBords(l)->getorigin()))
+			{
+				myVecteur2D* vr;
+				vr = new myVecteur2D(tmp, getBords(j));
+				result.push_back(vr);
+				tmp = vr;
+			}
+			
+		}
+	}
+	return result;
+}
 
 
 /*
@@ -281,9 +437,13 @@ int intersectionDroites( myVecteur2D* v1, myVecteur2D* v2, vertex& sol) {
 }
 
 
-float produitscalaire(myVecteur2D *v1, myVecteur2D *v2){
+float produitscalaire(myVecteur2D* v1, myVecteur2D* v2){
 
-	return (v1->getxdir()*v2->getydir() + v1->getydir()*v2->getydir());
+	float result = ( ( ( v1->getxdir() )*( v2->getxdir() ) +  (v1->getydir() ) * (v2->getydir() ) ) );
+
+	//debug
+	std::cout << " ps : " << result << std::endl;
+	return result;
 
 
 }
@@ -308,12 +468,52 @@ bool appartientSegment(vertex pointCible, vertex A, vertex B){ //NE FONCTIONNE P
 }
 */
 bool appartientSegment(vertex pointCible, vertex A, vertex B){
-	float t1 = pointCible.x * (1 / (A.x - B.x)) * pointCible.x;
-	std::cout << "t1 :" << t1  << std::endl;
-	if (t1<1 && t1>0 )
+
+	if (A.x !=B.x && A.y != B.y)
 	{
+		float t1 = (pointCible.x - +B.x) * (1 / (A.x - B.x));
+		//std::cout << "t1 x :" << t1 << std::endl;
+
+		float t2 = (pointCible.y - B.y) * (1 / (A.y - B.y)) ;
+		//std::cout << "t2 y :" << t2 << std::endl;
+
+		if ((t2 < 1 && t2>0) )//&& egalerr( t1 , t2))
+		{
+			return true;
+		}
+		else return false;
+	}
+
+	else if (A.x == B.x)
+	{
+
+		float t2 = (pointCible.y - B.y) * (1 / (A.y - B.y));
+		//std::cout << "t2 y :" << t2 << std::endl;
+
+		if (t2 < 1 && t2>0 )// && egalerr(pointCible.x , A.x)  )
+			return true;
+		else
+			return false;
+
+	}
+
+	else if (A.y == B.y)
+	{
+		float t1 = (pointCible.x - B.x) * (1 / (A.x - B.x));
+		//std::cout << "t1 x :" << t1 << std::endl;
+		
+
+		if (t1 < 1 && t1>0 ) //&& egalerr(pointCible.y , A.y) )
+			return true;
+		else
+			return false;
+
+	}
+}
+
+bool egalerr(float x, float y){
+	if (x < (y + M_ERR) && x > (y - M_ERR)){
 		return true;
 	}
 	else return false;
-
 }

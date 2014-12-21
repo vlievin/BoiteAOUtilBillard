@@ -70,18 +70,22 @@ float offset = 0.1;
 // Definition de la fonction d'affichage
 GLvoid affichage(){
 	
-	
+	system("cls");
 	//création d'un vecteur test
+	cout << "1" << endl;
 	myVecteur2D* v1;
 	// t varie avec la touche 8 enfoncée
-	v1 = new myVecteur2D(cos(t), sin(t));
+	v1 = new myVecteur2D(5*cos(t), 5*sin(t));
+	cout << "2 : "<<v1->getNorme() << endl;
+	v1->normalise();
+	cout << "3 : " << v1->getNorme() << endl;
 	vertex v1or = { 0.0f, 0.0f };
 	v1->setorigin(v1or);
 	
 	cadre* cadreJeu;
 	cadreJeu = new cadre(contour[0], contour[1], contour[2], contour[3]);
-	int numBord = cadreJeu->getBordVise(v1);
-	cout << "numbord : " << numBord << endl;
+	//int numBord = cadreJeu->getBordVise(v1);
+	//cout << "numbord : " << numBord << endl;
 	
 
 	// Effacement du frame buffer
@@ -96,31 +100,32 @@ GLvoid affichage(){
 
 	
 	//on bouge la camera
-	glTranslatef(0.0, 0.0, -10.0);
+	glTranslatef(0.0, 0.0, -2.0);
 		
 	glColor3f(1.0f, 1.0f, 1.0f);
 	cadreJeu->afficherGL();
 		
-	system("cls");
+	
 		
 		//tracé des vecteurs
 		v1->afficherGL(0.2f);
 		//vr->afficherGL();
 		
-		//PROBLEME
-		// la fonction appartient au segment prend deux fois le meme point par boucle -> intégrer cette fonction dans "intersection de droites" ?
-		//tracé de l'intersection
+		
+
+		cadreJeu->afficherGL();
+		cadreJeu->afficherVecteursGL();
+
 		for (int j = 0; j < 4; j++){
 			int l = j+1;
 			if (l > 3)
 			{
 					l = 0;
 			}
-			cadreJeu->getBords(j)->afficherGL(0.2f);
 			vertex* inter;
 			inter = new vertex;
 			int dir = intersectionDroites(v1, cadreJeu->getBords(j), *inter);
-			std::cout << "inter  x : " << inter->x << "  y : " << inter->y << std::endl;
+			//std::cout << "inter  x : " << inter->x << "  y : " << inter->y << std::endl;
 			if (dir > 0 && appartientSegment(*inter, cadreJeu->getBords(j)->getorigin(), cadreJeu->getBords(l)->getorigin()))
 			{
 				glPointSize(10);
@@ -128,10 +133,14 @@ GLvoid affichage(){
 				glColor3f(1.0f, 0.0f, 0.0f);
 				glVertex2f(inter->x, inter->y);
 				glEnd();
-				//myVecteur2D* vr;
-				//vr = new myVecteur2D(v1, cadreJeu->getBords(j));
+
+				myVecteur2D* vr;
+				vr = new myVecteur2D(v1, cadreJeu->getBords(j));
+				cout << "vr : " << " x : " << vr->getxdir() << " y : " << vr->getydir() << " origin : " << vr->getorigin().x << " | " << vr->getorigin().y << endl;
+				//vr = new myVecteur2D;
+				//vr->setRebond(v1, cadreJeu->getBords(j));
 				
-				//vr->afficherGL(0.2f);
+				vr->afficherGL(0.2f);
 				//std::cout << "no bord : " << j << endl;
 				
 			}
@@ -276,7 +285,7 @@ GLvoid redimensionner(int w, int h) {
 
 
 int main(int argc, char *argv[])
-{
+{  
 	// Initialisation de GLUT
 	glutInit(&argc, argv);
 	// Choix du mode d'affichage (ici RVB)

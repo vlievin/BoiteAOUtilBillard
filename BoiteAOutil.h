@@ -14,7 +14,9 @@
 #endif
 
 #include <cmath>
+
 #include <vector>
+#include <algorithm>
 
 typedef struct {
 	float x;
@@ -22,6 +24,7 @@ typedef struct {
 
 } vertex;
 
+const float  M_ERR = 0.001;
 
 class myVecteur2D { //il faut gérer le cas du vecteur nul
 
@@ -30,6 +33,7 @@ private:
 	float ydir;
 	vertex origin;
 public:
+	myVecteur2D();
 	myVecteur2D(float x, float y);
 	myVecteur2D(float x, float y, vertex point);
 	myVecteur2D(myVecteur2D* v1, myVecteur2D* v2); // crée le vecteur "rebond", du premier vecteur sur le deuxième
@@ -43,6 +47,7 @@ public:
 	void afficherGL() const;
 	void afficherGL(float alpha) const;
 	float getNorme()const;
+	//void setRebond(myVecteur2D* v1, myVecteur2D* v2);
 	
 
 };
@@ -57,17 +62,18 @@ class cadre{
 	*/
 
 private:
-	myVecteur2D* bords[4];
+	std::vector<myVecteur2D*> bords;
 public:
 	cadre();
 	cadre(myVecteur2D* a, myVecteur2D* b, myVecteur2D* c, myVecteur2D* d);
 	cadre(vertex a, vertex b, vertex c, vertex d);
 	void afficherGL() const;
+	void afficherVecteursGL() const;
 	myVecteur2D* getBords(int i) const;
 	vertex getcoins(int i) const;
 	void setBords(int i, myVecteur2D* vector);
 	int getBordVise(myVecteur2D* vec) const; // retourne l'indice du bord pointé 
-	
+	std::vector<myVecteur2D*> rebonds(myVecteur2D* v,int nb)const;
 
 };
 
@@ -83,5 +89,9 @@ bool appartientSegment(vertex pointCible, vertex A, vertex B); // on considère l
 
 float distance(vertex A, vertex B);
 
+
+
+
+bool egalerr(float x, float y); // donne l'égalité entre deux valeurs en prenant en compte l'imprecision des calculs
 #endif //BOITEAOUTIL_H
 
