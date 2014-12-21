@@ -65,11 +65,12 @@ private:
 	std::vector<myVecteur2D*> bords;
 public:
 	cadre();
-	cadre(myVecteur2D* a, myVecteur2D* b, myVecteur2D* c, myVecteur2D* d);
+	//cadre(myVecteur2D* a, myVecteur2D* b, myVecteur2D* c, myVecteur2D* d);
 	cadre(vertex a, vertex b, vertex c, vertex d);
 	void afficherGL() const;
 	void afficherVecteursGL() const;
 	myVecteur2D* getBords(int i) const;
+	std::vector<myVecteur2D*> getBords()const;
 	vertex getcoins(int i) const;
 	void setBords(int i, myVecteur2D* vector);
 	int getBordVise(myVecteur2D* vec) const; // retourne l'indice du bord pointé 

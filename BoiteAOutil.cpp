@@ -230,7 +230,7 @@ DEFINITION DE cadre
 */
 
 cadre::cadre(){}
-
+/*
 cadre::cadre(myVecteur2D* a, myVecteur2D* b, myVecteur2D* c, myVecteur2D* d)   {
 	bords.push_back(a);
 	bords.push_back(b);
@@ -238,7 +238,7 @@ cadre::cadre(myVecteur2D* a, myVecteur2D* b, myVecteur2D* c, myVecteur2D* d)   {
 	bords.push_back(d);
 	
 }
-
+*/
 cadre::cadre(vertex a, vertex b, vertex c, vertex d)   {
 	myVecteur2D* va;
 	va = new myVecteur2D(b.x - a.x, b.y - a.y, a);
@@ -256,6 +256,10 @@ cadre::cadre(vertex a, vertex b, vertex c, vertex d)   {
 
 myVecteur2D* cadre::getBords(int i) const{
 	return bords[i];
+}
+
+std::vector<myVecteur2D*> cadre::getBords()const{
+	return bords;
 }
 
 vertex cadre::getcoins(int i) const{

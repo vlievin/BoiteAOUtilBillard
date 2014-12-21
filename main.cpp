@@ -31,10 +31,10 @@ TODO
 // Création des sommets du contour
 vertex contour[4] =
 {
-	{ 1.0f,1.0f },
-	{ 1.0f, -1.0f },
-	{ -1.0f, -1.0f },
-	{ -1.0f, 1.0f },
+	{ 1.0f,1.1f },
+	{ 1.0f, -1.2f },
+	{ -1.0f, -1.3f },
+	{ -1.0f, 1.2f },
 
 };
 
@@ -84,8 +84,7 @@ GLvoid affichage(){
 	
 	cadre* cadreJeu;
 	cadreJeu = new cadre(contour[0], contour[1], contour[2], contour[3]);
-	//int numBord = cadreJeu->getBordVise(v1);
-	//cout << "numbord : " << numBord << endl;
+	
 	
 
 	// Effacement du frame buffer
@@ -111,12 +110,13 @@ GLvoid affichage(){
 		v1->afficherGL(0.2f);
 		//vr->afficherGL();
 		
-		
+		int idbord = 0;
 
 		cadreJeu->afficherGL();
 		cadreJeu->afficherVecteursGL();
 
-		for (int j = 0; j < 4; j++){
+		cout << "nb bords" << cadreJeu->getBords().size() << endl;
+		for (int j = 0; j < cadreJeu->getBords().size(); j++){
 			int l = j+1;
 			if (l > 3)
 			{
@@ -125,7 +125,7 @@ GLvoid affichage(){
 			vertex* inter;
 			inter = new vertex;
 			int dir = intersectionDroites(v1, cadreJeu->getBords(j), *inter);
-			std::cout << " main inter  x : " << inter->x << "  y : " << inter->y << std::endl;
+			
 			if (dir > 0 && appartientSegment(*inter, cadreJeu->getBords(j)->getorigin(), cadreJeu->getBords(l)->getorigin()))
 			{
 				glPointSize(10);
@@ -133,19 +133,18 @@ GLvoid affichage(){
 				glColor3f(1.0f, 0.0f, 0.0f);
 				glVertex2f(inter->x, inter->y);
 				glEnd();
-
+				//retenir le bord sur lequel le rayon rebondi
+				idbord = j;
 				myVecteur2D* vr;
-				vr = new myVecteur2D(v1, cadreJeu->getBords(j));
+				vr = new myVecteur2D(v1, cadreJeu->getBords(j)); std::cout << " main inter  x : " << inter->x << "  y : " << inter->y << std::endl;
 				cout << "main vr : " << " x : " << vr->getxdir() << " y : " << vr->getydir() << " origin : " << vr->getorigin().x << " | " << vr->getorigin().y << endl;
-				//vr = new myVecteur2D;
-				//vr->setRebond(v1, cadreJeu->getBords(j));
 				
 				vr->afficherGL(0.2f);
-				//std::cout << "no bord : " << j << endl;
+				
 
 				/* TEST*/
 
-				for (int j = 0; j < 4; j++){
+				for (int j = 0; j < cadreJeu->getBords().size(); j++){
 					int l = j + 1;
 					if (l > 3)
 					{
@@ -157,21 +156,24 @@ GLvoid affichage(){
 					inter1.y = 0.0f;
 
 					int dir = intersectionDroites(vr, cadreJeu->getBords(j), inter1);
-					std::cout << " main inter1  x : " << inter1.x << "  y : " << inter1.y << std::endl;
-					if (dir > 0 && appartientSegment(inter1, cadreJeu->getBords(j)->getorigin(), cadreJeu->getBords(l)->getorigin()))
+					
+					if (j!=idbord && dir > 0 && appartientSegment(inter1, cadreJeu->getBords(j)->getorigin(), cadreJeu->getBords(l)->getorigin()))
 					{
 						glPointSize(10);
 						glBegin(GL_POINTS);
 						glColor3f(1.0f, 0.0f, 0.0f);
-						glVertex2f(inter->x, inter->y);
+						glVertex2f(inter1.x, inter1.y);
 						glEnd();
 
 						myVecteur2D* vr1;
 						vr1 = new myVecteur2D(vr, cadreJeu->getBords(j));
+						std::cout << " main inter1  x : " << inter1.x << "  y : " << inter1.y << std::endl;
 						vr1->setorigin(inter1);
 						cout << "main vr1 : " << " x : " << vr1->getxdir() << " y : " << vr1->getydir() << " origin : " << vr1->getorigin().x << " | " << vr1->getorigin().y << endl;
 
 						vr1->afficherGL(0.2f);
+						delete vr1;
+						
 					}
 					/* FIN DE TEST*/
 				}
@@ -188,6 +190,12 @@ GLvoid affichage(){
 		
 	glFlush();
 	glutSwapBuffers();
+
+	delete cadreJeu;
+	delete v1;
+	
+	
+
 }
 
 // Definition de la fonction gerant les interruptions clavier
