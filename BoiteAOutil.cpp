@@ -81,7 +81,7 @@ myVecteur2D::myVecteur2D(myVecteur2D* v1, myVecteur2D* v2){ // créer un rebond :
 	{
 		v1->normalise();
 		v2->normalise();
-		std::cout << "V1 : " << v1->getNorme() << "  v2 : " << v2->getNorme() << " v1x : " << v1->getxdir() << " v1y : " << v1->getydir() << " v2x : " << v2->getxdir() << " v2y : " << v2->getydir() << std::endl;
+		//std::cout << "V1 : " << v1->getNorme() << "  v2 : " << v2->getNorme() << " v1x : " << v1->getxdir() << " v1y : " << v1->getydir() << " v2x : " << v2->getxdir() << " v2y : " << v2->getydir() << std::endl;
 		
 		vertex dirOrtho;
 		dirOrtho.x =  v2->getydir();
@@ -96,7 +96,7 @@ myVecteur2D::myVecteur2D(myVecteur2D* v1, myVecteur2D* v2){ // créer un rebond :
 		ydir = psv12*v2->getydir() - psv12ortho * dirOrtho.y;
 		origin = originrebond;
 
-		std::cout << "psv12 : " << psv12 << "  ortho " << psv12ortho << "xdir : " << xdir << "direct " << psv12*v2->getxdir() + psv12ortho * dirOrtho.x<< std::endl;
+		//std::cout << "psv12 : " << psv12 << "  ortho " << psv12ortho << "xdir : " << xdir << "direct " << psv12*v2->getxdir() + psv12ortho * dirOrtho.x<< std::endl;
 
 		normalise();
 		
@@ -349,8 +349,10 @@ std::vector<myVecteur2D*> cadre::rebonds(myVecteur2D* v ,int nb)const{
 			{
 				myVecteur2D* vr;
 				vr = new myVecteur2D(tmp, getBords(j));
+				vr->setorigin(*inter);
 				result.push_back(vr);
 				tmp = vr;
+				std::cout << "vr : " << " x : " << vr->getxdir() << " y : " << vr->getydir() << " origin : " << vr->getorigin().x << " | " << vr->getorigin().y << std::endl;
 			}
 			
 		}
@@ -442,7 +444,7 @@ float produitscalaire(myVecteur2D* v1, myVecteur2D* v2){
 	float result = ( ( ( v1->getxdir() )*( v2->getxdir() ) +  (v1->getydir() ) * (v2->getydir() ) ) );
 
 	//debug
-	std::cout << " ps : " << result << std::endl;
+	//std::cout << " ps : " << result << std::endl;
 	return result;
 
 
@@ -456,17 +458,7 @@ float distance(vertex A, vertex B){
 	return sqrt((B.x - A.x)*(B.x - A.x) + (B.y - A.y)*(B.y - A.y));
 }
 
-/*
-bool appartientSegment(vertex pointCible, vertex A, vertex B){ //NE FONCTIONNE PAS
-	float d1 = distance(pointCible, A);
-	float d2 = distance(A, B);
-	std::cout << "d1 :" << d1 << " d2 : " << d2<< std::endl;
-	if (d1 > d2)
-		return true;
-	else
-		return false;
-}
-*/
+
 bool appartientSegment(vertex pointCible, vertex A, vertex B){
 
 	if (A.x !=B.x && A.y != B.y)
@@ -516,4 +508,18 @@ bool egalerr(float x, float y){
 		return true;
 	}
 	else return false;
+}
+
+void afficherRebondsGL(std::vector<myVecteur2D*> rebonds){
+	for (int i = 0; i < rebonds.size(); i++)
+	{
+		int l = i + 1;
+		if (l >= rebonds.size())
+			l = 0;
+		glColor3f(0.0f, 0.0f, 1.0f);
+		glBegin(GL_LINES);
+		glVertex2f( rebonds.at(i)->getorigin().x, rebonds.at(i)->getorigin().y);
+		std::cout << "it : " << i << std::endl;
+		glEnd();
+	}
 }

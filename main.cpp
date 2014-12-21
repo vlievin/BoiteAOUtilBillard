@@ -72,13 +72,13 @@ GLvoid affichage(){
 	
 	system("cls");
 	//création d'un vecteur test
-	cout << "1" << endl;
+	//cout << "1" << endl;
 	myVecteur2D* v1;
 	// t varie avec la touche 8 enfoncée
 	v1 = new myVecteur2D(5*cos(t), 5*sin(t));
-	cout << "2 : "<<v1->getNorme() << endl;
+	//cout << "2 : "<<v1->getNorme() << endl;
 	v1->normalise();
-	cout << "3 : " << v1->getNorme() << endl;
+	//cout << "3 : " << v1->getNorme() << endl;
 	vertex v1or = { 0.0f, 0.0f };
 	v1->setorigin(v1or);
 	
@@ -125,7 +125,7 @@ GLvoid affichage(){
 			vertex* inter;
 			inter = new vertex;
 			int dir = intersectionDroites(v1, cadreJeu->getBords(j), *inter);
-			//std::cout << "inter  x : " << inter->x << "  y : " << inter->y << std::endl;
+			std::cout << " main inter  x : " << inter->x << "  y : " << inter->y << std::endl;
 			if (dir > 0 && appartientSegment(*inter, cadreJeu->getBords(j)->getorigin(), cadreJeu->getBords(l)->getorigin()))
 			{
 				glPointSize(10);
@@ -136,12 +136,51 @@ GLvoid affichage(){
 
 				myVecteur2D* vr;
 				vr = new myVecteur2D(v1, cadreJeu->getBords(j));
-				cout << "vr : " << " x : " << vr->getxdir() << " y : " << vr->getydir() << " origin : " << vr->getorigin().x << " | " << vr->getorigin().y << endl;
+				cout << "main vr : " << " x : " << vr->getxdir() << " y : " << vr->getydir() << " origin : " << vr->getorigin().x << " | " << vr->getorigin().y << endl;
 				//vr = new myVecteur2D;
 				//vr->setRebond(v1, cadreJeu->getBords(j));
 				
 				vr->afficherGL(0.2f);
 				//std::cout << "no bord : " << j << endl;
+
+				/* TEST*/
+
+				for (int j = 0; j < 4; j++){
+					int l = j + 1;
+					if (l > 3)
+					{
+						l = 0;
+					}
+					vertex inter1;
+					
+					inter1.x = 0.0f;
+					inter1.y = 0.0f;
+
+					int dir = intersectionDroites(vr, cadreJeu->getBords(j), inter1);
+					std::cout << " main inter1  x : " << inter1.x << "  y : " << inter1.y << std::endl;
+					if (dir > 0 && appartientSegment(inter1, cadreJeu->getBords(j)->getorigin(), cadreJeu->getBords(l)->getorigin()))
+					{
+						glPointSize(10);
+						glBegin(GL_POINTS);
+						glColor3f(1.0f, 0.0f, 0.0f);
+						glVertex2f(inter->x, inter->y);
+						glEnd();
+
+						myVecteur2D* vr1;
+						vr1 = new myVecteur2D(vr, cadreJeu->getBords(j));
+						vr1->setorigin(inter1);
+						cout << "main vr1 : " << " x : " << vr1->getxdir() << " y : " << vr1->getydir() << " origin : " << vr1->getorigin().x << " | " << vr1->getorigin().y << endl;
+
+						vr1->afficherGL(0.2f);
+					}
+					/* FIN DE TEST*/
+				}
+
+				//REBONDS
+
+				
+				//std::vector<myVecteur2D*> rebonds = cadreJeu->rebonds(v1, 3);
+				//afficherRebondsGL(rebonds);
 				
 			}
 

@@ -89,9 +89,11 @@ bool appartientSegment(vertex pointCible, vertex A, vertex B); // on considère l
 
 float distance(vertex A, vertex B);
 
-
+void afficherRebondsGL(std::vector<myVecteur2D*> rebonds);
 
 
 bool egalerr(float x, float y); // donne l'égalité entre deux valeurs en prenant en compte l'imprecision des calculs
+
+
 #endif //BOITEAOUTIL_H
 
