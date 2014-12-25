@@ -8,6 +8,7 @@
 
 #include <time.h>
 #include "BoiteAOutil.h"
+#include "trajectoire.h"
 
 using namespace std;
 
@@ -31,10 +32,10 @@ TODO
 // Création des sommets du contour
 vertex contour[4] =
 {
-	{ 1.0f,1.1f },
-	{ 1.0f, -1.2f },
+	{ 0.90f,1.1f },
+	{ 1.15f, -1.2f },
 	{ -1.0f, -1.3f },
-	{ -1.0f, 1.2f },
+	{ -1.4f, 1.2f },
 
 };
 
@@ -99,7 +100,7 @@ GLvoid affichage(){
 
 	
 	//on bouge la camera
-	glTranslatef(0.0, 0.0, -2.0);
+	glTranslatef(0.0, 0.0, -3.0);
 		
 	glColor3f(1.0f, 1.0f, 1.0f);
 	cadreJeu->afficherGL();
@@ -111,82 +112,18 @@ GLvoid affichage(){
 		//vr->afficherGL();
 		
 		int idbord = 0;
-
-		cadreJeu->afficherGL();
 		cadreJeu->afficherVecteursGL();
-
-		cout << "nb bords" << cadreJeu->getBords().size() << endl;
-		for (int j = 0; j < cadreJeu->getBords().size(); j++){
-			int l = j+1;
-			if (l > 3)
-			{
-					l = 0;
-			}
-			vertex* inter;
-			inter = new vertex;
-			int dir = intersectionDroites(v1, cadreJeu->getBords(j), *inter);
-			
-			if (dir > 0 && appartientSegment(*inter, cadreJeu->getBords(j)->getorigin(), cadreJeu->getBords(l)->getorigin()))
-			{
-				glPointSize(10);
-				glBegin(GL_POINTS);
-				glColor3f(1.0f, 0.0f, 0.0f);
-				glVertex2f(inter->x, inter->y);
-				glEnd();
-				//retenir le bord sur lequel le rayon rebondi
-				idbord = j;
-				myVecteur2D* vr;
-				vr = new myVecteur2D(v1, cadreJeu->getBords(j)); std::cout << " main inter  x : " << inter->x << "  y : " << inter->y << std::endl;
-				cout << "main vr : " << " x : " << vr->getxdir() << " y : " << vr->getydir() << " origin : " << vr->getorigin().x << " | " << vr->getorigin().y << endl;
-				
-				vr->afficherGL(0.2f);
-				
-
-				/* TEST*/
-
-				for (int j = 0; j < cadreJeu->getBords().size(); j++){
-					int l = j + 1;
-					if (l > 3)
-					{
-						l = 0;
-					}
-					vertex inter1;
-					
-					inter1.x = 0.0f;
-					inter1.y = 0.0f;
-
-					int dir = intersectionDroites(vr, cadreJeu->getBords(j), inter1);
-					
-					if (j!=idbord && dir > 0 && appartientSegment(inter1, cadreJeu->getBords(j)->getorigin(), cadreJeu->getBords(l)->getorigin()))
-					{
-						glPointSize(10);
-						glBegin(GL_POINTS);
-						glColor3f(1.0f, 0.0f, 0.0f);
-						glVertex2f(inter1.x, inter1.y);
-						glEnd();
-
-						myVecteur2D* vr1;
-						vr1 = new myVecteur2D(vr, cadreJeu->getBords(j));
-						std::cout << " main inter1  x : " << inter1.x << "  y : " << inter1.y << std::endl;
-						vr1->setorigin(inter1);
-						cout << "main vr1 : " << " x : " << vr1->getxdir() << " y : " << vr1->getydir() << " origin : " << vr1->getorigin().x << " | " << vr1->getorigin().y << endl;
-
-						vr1->afficherGL(0.2f);
-						delete vr1;
-						
-					}
-					/* FIN DE TEST*/
-				}
+		cadreJeu->afficherGL();
 
 				//REBONDS
 
+		trajectoire* t1;
+		t1 = new trajectoire(v1, cadreJeu, 20);
+		t1->afficherGL();
 				
 				//std::vector<myVecteur2D*> rebonds = cadreJeu->rebonds(v1, 3);
 				//afficherRebondsGL(rebonds);
 				
-			}
-
-		}
 		
 	glFlush();
 	glutSwapBuffers();
@@ -364,3 +301,38 @@ int main(int argc, char *argv[])
 
 	return 0;
 }
+
+
+
+/*
+sauvegarde
+*/
+
+/*
+cout << "nb bords" << cadreJeu->getBords().size() << endl;
+for (int j = 0; j < cadreJeu->getBords().size(); j++){
+int l = j+1;
+if (l > 3)
+{
+l = 0;
+}
+vertex* inter;
+inter = new vertex;
+int dir = intersectionDroites(v1, cadreJeu->getBords(j), *inter);
+
+if (dir > 0 && appartientSegment(*inter, cadreJeu->getBords(j)->getorigin(), cadreJeu->getBords(l)->getorigin()))
+{
+glPointSize(10);
+glBegin(GL_POINTS);
+glColor3f(1.0f, 0.0f, 0.0f);
+glVertex2f(inter->x, inter->y);
+glEnd();
+//retenir le bord sur lequel le rayon rebondi
+idbord = j;
+myVecteur2D* vr;
+vr = new myVecteur2D(v1, cadreJeu->getBords(j)); std::cout << " main inter  x : " << inter->x << "  y : " << inter->y << std::endl;
+cout << "main vr : " << " x : " << vr->getxdir() << " y : " << vr->getydir() << " origin : " << vr->getorigin().x << " | " << vr->getorigin().y << endl;
+
+vr->afficherGL(0.2f);
+
+*/

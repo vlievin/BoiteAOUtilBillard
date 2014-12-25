@@ -191,7 +191,7 @@ void myVecteur2D::normalise(){
 		float norm = sqrt(abs(xdir*xdir + ydir*ydir));
 		xdir = xdir / norm;
 		ydir = ydir / norm;
-		std::cout << "vecteur non nul : "<< getNorme() << std::endl;
+		//std::cout << "vecteur non nul : "<< getNorme() << std::endl;
 	}
 }
 
@@ -311,25 +311,29 @@ int cadre::getBordVise(myVecteur2D* vec) const{
 	int k;
 	//debug
 	int nbinter = 0;
+	int l = 0;
 	//
-	int bord = -1; // cas où il n'y a pas de solution (ce qui ne devrait pas arriver)
-	for (k = 0; k < 3; k++)
+	int bord = -1;
+	std::cout << "in : getBordsVise : taille du vecteur bords : " << bords.size() << std::endl;
+	for (k = 0; k < bords.size(); ++k)
 	{
+		l = k+1;
+		if (l >= bords.size())
+		{
+			l = 0;
+		}
 		dir = intersectionDroites(vec, bords[k], intersection);
 		if (dir > 0){
-			if (appartientSegment(intersection, bords[k]->getorigin(), bords[k + 1]->getorigin()))
+			if (appartientSegment(intersection, bords[k]->getorigin(), bords[l]->getorigin()))
+			{
 				bord = k;
-			nbinter += 1;
+				nbinter += 1;
+				std::cout << "in : getBordsVise : intersections : k : " << k << std::endl;
+			}
 		}
 	}
-		k = 3;
-		dir = intersectionDroites(vec, bords[k], intersection);
-		if (dir > 0){
-			if (appartientSegment(intersection, bords[k]->getorigin(), bords[0]->getorigin()))
-				bord = k;
-			nbinter += 1;
-	}
-		//std::cout << "nombre d'intersections : " << nbinter << std::endl;
+	
+		std::cout << "in : getBordsVise : nombre d'intersections : " << nbinter << std::endl;
 		return bord;
 }
 
@@ -505,6 +509,8 @@ bool appartientSegment(vertex pointCible, vertex A, vertex B){
 			return false;
 
 	}
+	else return false;
+	std::cout << " in function appartient au segment : aucune condition n'est validée " << std::endl;
 }
 
 bool egalerr(float x, float y){
