@@ -225,6 +225,18 @@ float myVecteur2D::getNorme()const{
 	return sqrt(xdir*xdir + ydir*ydir);
 }
 
+bool myVecteur2D::isEgal(myVecteur2D* v) const{
+	if (xdir == v->getxdir() && ydir == v->getydir())
+		return true;
+	else return false;
+}
+
+bool myVecteur2D::isNul()const{
+	if (xdir == 0 && ydir == 0)
+		return true;
+	else return false;
+}
+
 /*
 DEFINITION DE cadre
 */
@@ -532,4 +544,62 @@ void afficherRebondsGL(std::vector<myVecteur2D*> rebonds){
 		std::cout << "it : " << i << std::endl;
 		glEnd();
 	}
+}
+
+vertex operator+(vertex const& a, myVecteur2D* const& b){
+	vertex result;
+	result.x = a.x + b->getxdir();
+	result.y = a.y + b->getydir();
+	return result;
+}
+
+void afficherGL(vertex point){
+	glEnd();
+	glPointSize(5);
+	glBegin(GL_POINTS);
+	glColor3f(1.0f, 0.0f, 0.0f);
+	glVertex2f(point.x, point.y);
+	glEnd();
+
+}
+
+std::vector<double> solvePoly2(double a, double b, double c){
+	
+	std::vector<double> result;
+	result.clear();
+
+	double delta = b*b - 4 * a*c;
+
+	if (a != 0)
+	{
+
+		if (delta < 0)
+		{
+			return result;
+		}
+		else if (delta == 0)
+		{
+			double tmp = -b / ( 2 * a);
+			result.push_back(tmp);
+			return result;
+		}
+		else
+		{
+			double tmp = (-b + sqrt(delta)) / (2 * a);
+			result.push_back(tmp);
+			double tmp = (- b - sqrt(delta)) / (2 * a);
+			result.push_back(tmp);
+
+			return result;
+		}
+
+	}
+	else
+		if (b == 0)
+			return result;
+		else
+		{
+			result.push_back((-c) / b);
+			return result ;
+		}
 }

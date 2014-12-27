@@ -18,6 +18,11 @@
 #include <vector>
 #include <algorithm>
 
+#ifndef M_PI
+#define M_PI           3.14159265358979323846
+#endif
+
+
 typedef struct {
 	float x;
 	float y;
@@ -47,6 +52,8 @@ public:
 	void afficherGL() const;
 	void afficherGL(float alpha) const;
 	float getNorme()const;
+	bool isEgal(myVecteur2D* v) const;
+	bool isNul()const;
 	//void setRebond(myVecteur2D* v1, myVecteur2D* v2);
 	
 
@@ -95,6 +102,11 @@ void afficherRebondsGL(std::vector<myVecteur2D*> rebonds);
 
 bool egalerr(float x, float y); // donne l'égalité entre deux valeurs en prenant en compte l'imprecision des calculs
 
+vertex operator+(vertex const& a, myVecteur2D* const& b);
+
+void afficherGL(vertex point);
+
+std::vector<double> solvePoly2(double a, double b, double c);
 
 #endif //BOITEAOUTIL_H
 

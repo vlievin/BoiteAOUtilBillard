@@ -9,13 +9,10 @@
 #include <time.h>
 #include "BoiteAOutil.h"
 #include "trajectoire.h"
+#include "boule.h"
 
 using namespace std;
 
-
-// Structure de données simpliste
-// pour stocker un sommet 3D et 
-// ses informations de couleur
 
 
 
@@ -24,9 +21,7 @@ using namespace std;
 TODO
 
 */
-//tester fonctions appartient au segment et rebond
-//produit scalaire ne fonctionne pas : deg -> rad ? nope
-//ps >1 /!\
+
 
 
 // Création des sommets du contour
@@ -85,6 +80,7 @@ GLvoid affichage(){
 	
 	cadre* cadreJeu;
 	cadreJeu = new cadre(contour[0], contour[1], contour[2], contour[3]);
+
 	
 	
 
@@ -104,6 +100,9 @@ GLvoid affichage(){
 		
 	glColor3f(1.0f, 1.0f, 1.0f);
 	cadreJeu->afficherGL();
+
+
+	// rebonds etc
 		
 	
 		
@@ -117,19 +116,29 @@ GLvoid affichage(){
 
 				//REBONDS
 
-		trajectoire* t1;
-		t1 = new trajectoire(v1, cadreJeu, 20);
-		t1->afficherGL();
+		//trajectoire* t1;
+		//t1 = new trajectoire(v1, cadreJeu, 3);
+		//t1->afficherGL();
 				
-				//std::vector<myVecteur2D*> rebonds = cadreJeu->rebonds(v1, 3);
-				//afficherRebondsGL(rebonds);
 				
+		//boules
+
+		vertex vb = { 0.4f, 0.4f };
+		boule* b1;
+		b1 = new boule(0.2f, vb);
+		glLineWidth(1.0f);
+		b1->afficherGL();
+		
+		
+		
+
 		
 	glFlush();
 	glutSwapBuffers();
 
 	delete cadreJeu;
 	delete v1;
+	delete b1;
 	
 	
 
