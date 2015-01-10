@@ -134,7 +134,7 @@ GLvoid affichage(){
 		//intersection avec la boule
 		vertex interBoule;
 		bool binter = false;
-		float r = 0.1d;
+		float r = 0.15d;
 		cout << "-- intersections de boules --" << endl;
 		binter = b1->getIntersection(v1, r , interBoule);
 
@@ -146,9 +146,15 @@ GLvoid affichage(){
             b2 = new boule(r, interBoule);
             glLineWidth(1.0f);
             b2->afficherGL();
+
+            //vecteur directeur du rebond
+		myVecteur2D* vrb;
+		vrb = new myVecteur2D(v1, b1, r);
+		vrb->afficherGL();
+		cout << endl << "in main : vecteur directeur rebond boule : direction : (" << vrb->getxdir()<< " | " << vrb->getydir()
+		<<  ")  origin : (" << vrb->getorigin().x << " | "<< vrb->getorigin().y << ")"<<endl;
+
 		}
-
-
 
 
 
@@ -309,7 +315,7 @@ int main(int argc, char *argv[])
 	// Taille initiale de la fenetre GLUT
 	glutInitWindowSize(windowW, windowH);
 	// Creation de la fenetre GLUT
-	glutCreateWindow("Cube3D");
+	glutCreateWindow("Boite à Outil du Projet Billard");
 
 	// Définition de la couleur d'effacement du framebuffer
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);

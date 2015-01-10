@@ -25,6 +25,8 @@
 #endif
 
 
+
+
 typedef struct {
 	float x;
 	float y;
@@ -32,6 +34,8 @@ typedef struct {
 } vertex;
 
 const float  M_ERR = 0.001;
+
+class boule;
 
 class myVecteur2D { //il faut gérer le cas du vecteur nul
 
@@ -44,6 +48,7 @@ public:
 	myVecteur2D(float x, float y);
 	myVecteur2D(float x, float y, vertex point);
 	myVecteur2D(myVecteur2D* v1, myVecteur2D* v2); // crée le vecteur "rebond", du premier vecteur sur le deuxième
+	myVecteur2D(myVecteur2D* v1 , boule* b , float r); //crée le vecteur direction rebond sur une boule pour une boule lancée de rayon r
 	~myVecteur2D();
 	void setdir(float x, float y);
 	void setorigin(vertex point);

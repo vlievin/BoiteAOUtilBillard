@@ -1,4 +1,5 @@
 #include "BoiteAOutil.h"
+#include "boule.h"
 
 
 
@@ -103,58 +104,48 @@ myVecteur2D::myVecteur2D(myVecteur2D* v1, myVecteur2D* v2){ // créer un rebond :
 	}
 	else
 	{
-
+//on ne crée rien
 	}
 
 
 }
 
-/*
-void myVecteur2D::setRebond(myVecteur2D* v1, myVecteur2D* v2){ // créer un rebond : premier vecteur sur le deuxième
+myVecteur2D::myVecteur2D(myVecteur2D* v1 , boule* b , float r ){
 
-	vertex originrebond;
-	originrebond.x = 0;
-	originrebond.y = 0;
+// voir http://fr.wikipedia.org/wiki/Billard
 
-	int sens;
+    vertex inter;
+    bool binter = b->getIntersection(v1 , r , inter);
+    std::cout << " In BoiteAOutil : constructeur rebondboule : intersection : (" << inter.x << " | " << inter.y << ")   r : "<< r
+    <<  "centre de b : " << b->getCentre().x << " | " << b->getCentre().y << std::endl;
+    if (binter)
+    {
 
-	sens = intersectionDroites(v1, v2, originrebond);
+        origin = inter;
 
-	//if (sens > 0)
-	//{
-	v1->normalise();
-	v2->normalise();
-	std::cout << "V1 : " << v1->getNorme() << "  v2 : " << v2->getNorme() << std::endl;
+        ydir = b->getCentre().x - inter.x;
+        xdir = - ( b->getCentre().y - inter.y );
+        //utilisation du produit mixte pour déterminer le sens de rebond
+        float pmixte = ((inter.x - v1->getorigin().x )* (b->getCentre().y - v1->getorigin().y ))
+        - ((inter.y - v1->getorigin().y ) * (b->getCentre().x - v1->getorigin().x ));
+        std::cout << " in constructeur rebond boule : pmixte : " << pmixte << std::endl;
+        if (pmixte > 0)
+        {
+        xdir = - xdir;
+        ydir = - ydir;
+        }
 
-	std::cout << "ps : " << produitscalaire(v1, v2) << std::endl;
-	float alpha = acos(abs(produitscalaire(v1, v2))); // TODO : prendre en compte la valeur négative ou poistive de l'angle
 
-
-	if (produitVectoriel(v1, v2) < 0)
-		alpha = -alpha;
-	std::cout << "alpha : " << alpha << std::endl;
-
-	vertex dirOrtho; //défini le vecteur orthogonal au vecteur v2
-	dirOrtho.x = -v2->getydir();
-	dirOrtho.y = v2->getxdir();
-	this->origin = originrebond;
-	this->xdir = cos(alpha)*v2->getxdir() + sin(alpha)*dirOrtho.x;
-	this->ydir = sin(alpha)*dirOrtho.y + sin(alpha) * v2->getydir();
-
-	//xdir = dirOrtho.x;
-	//ydir = dirOrtho.y;
-	std::cout << "vec : " << getNorme() << std::endl;
-	this->normalise();
-	std::cout << "vec : " << getNorme() << std::endl;
-	/*}
-	else
-	{
-
-	}
+    }
+    else
+    {
+    //on ne crée rien
+    }
 
 
 }
-*/
+
+
 myVecteur2D::~myVecteur2D() {
 
 }

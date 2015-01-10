@@ -12,6 +12,15 @@ boule::boule(float r, vertex c) : centre(c), rayon(r)
 boule::~boule()
 {
 }
+
+float boule::getRayon() const{
+return rayon;
+}
+
+vertex boule::getCentre() const{
+return centre;
+}
+
 void boule::afficherGL()const{
 	//debug
 	cout << "boule : " << " centre xy : " << centre.x << " | " << centre.y << " rayon : " << rayon << endl << endl;
@@ -44,6 +53,8 @@ void boule::afficherGL()const{
 }
 
 bool boule::getIntersection(myVecteur2D* u, double R, vertex& sol)const{ // renvoi un le point de l'intersection entre la boule un un vecteur directeur.
+
+
 // R représente le rayon de la boule en mouvement (vecteur u)
 
 
@@ -71,14 +82,14 @@ bool boule::getIntersection(myVecteur2D* u, double R, vertex& sol)const{ // renv
             double db = 2 * ( (Q - centre.x) *l  - centre.y );
             double dc = Q*Q - 2 * Q * centre.x - K;
 
-            cout << " in boule.getIntersection() : paramètres clef :  " << "l : "<<l<<
-             " K : "<< K << " Q : " << Q << " da : " <<da << " db : "<<db << " dc : "<< dc  << endl ;
+            //cout << " in boule.getIntersection() : paramètres clef :  " << "l : "<<l<<
+             //" K : "<< K << " Q : " << Q << " da : " <<da << " db : "<<db << " dc : "<< dc  << endl ;
 
 			vector<double> solutions = solvePoly2(da, db, dc);
 			int nbsol = solutions.size();
 
-			for (int i = 0 ; i< solutions.size() ; i ++)
-			{cout << " in boule.getintersection : result solve poly : " <<solutions[i]<< endl;}
+			//for (int i = 0 ; i< solutions.size() ; i ++)
+			//{cout << " in boule.getintersection : result solve poly : " <<solutions[i]<< endl;}
 
             cout << " in boule.getIntersection() : taille du vecteur solution "<< nbsol << endl ;
 			// solutions en fonction du nombre de solutions
@@ -86,14 +97,14 @@ bool boule::getIntersection(myVecteur2D* u, double R, vertex& sol)const{ // renv
 			{
                 result = false;
                 //debug
-                cout<< "in Boule : getIntersection() : 0 solutions (poly)"<<endl;
+                //cout<< "in Boule : getIntersection() : 0 solutions (poly)"<<endl;
 			}
             else if (nbsol ==1 )
 			{
 
                 vertex s;
                 //debug
-                cout<< "in Boule : getIntersection() : 1 solutions (poly)"<<endl;
+                //cout<< "in Boule : getIntersection() : 1 solutions (poly)"<<endl;
                 s.y = solutions.at(0);
                 s.x = Q + l*solutions.at(0);
                 sol = s;
@@ -104,7 +115,7 @@ bool boule::getIntersection(myVecteur2D* u, double R, vertex& sol)const{ // renv
 			else if (nbsol == 2)// la bonne solution est le point le plus proche de l'origine du vecteur (faire un schéma)
 			{
 			//debug
-                cout<< "in Boule : getIntersection() : 2 solutions (poly)"<<endl;
+                //cout<< "in Boule : getIntersection() : 2 solutions (poly)"<<endl;
 
                 // calcul de la solution 1 et de sa distance par rapport à l'origine de u
                 vertex s1;
@@ -155,8 +166,8 @@ bool boule::getIntersection(myVecteur2D* u, double R, vertex& sol)const{ // renv
 			vector<double> solutions = solvePoly2(da, db, dc);
 			int nbsol = solutions.size();
 
-			for (int i = 0 ; i< solutions.size() ; i ++)
-			{cout << " in boule.getintersection : result solve poly : " <<solutions[i]<< endl;}
+			//for (int i = 0 ; i< solutions.size() ; i ++)
+			//{cout << " in boule.getintersection : result solve poly : " <<solutions[i]<< endl;}
 
             cout << " in boule.getIntersection() : taille du vecteur solution "<< nbsol << endl ;
 			// solutions en fonction du nombre de solutions
@@ -164,14 +175,14 @@ bool boule::getIntersection(myVecteur2D* u, double R, vertex& sol)const{ // renv
 			{
                 result = false;
                 //debug
-                cout<< "in Boule : getIntersection() : 0 solutions (poly)"<<endl;
+                //cout<< "in Boule : getIntersection() : 0 solutions (poly)"<<endl;
 			}
             else if (nbsol ==1 )
 			{
 
                 vertex s;
                 //debug
-                cout<< "in Boule : getIntersection() : 1 solutions (poly)"<<endl;
+                //cout<< "in Boule : getIntersection() : 1 solutions (poly)"<<endl;
                 s.x = solutions.at(0);
                 s.y = u->getorigin().y;
                 sol = s;
@@ -180,7 +191,7 @@ bool boule::getIntersection(myVecteur2D* u, double R, vertex& sol)const{ // renv
 			else if (nbsol == 2)// la bonne solution est le point le plus proche de l'origine du vecteur (faire un schéma)
 			{
 			//debug
-                cout<< "in Boule : getIntersection() : 2 solutions (poly)"<<endl;
+                //cout<< "in Boule : getIntersection() : 2 solutions (poly)"<<endl;
 
                 // calcul de la solution 1 et de sa distance par rapport à l'origine de u
                 vertex s1;
@@ -204,8 +215,6 @@ bool boule::getIntersection(myVecteur2D* u, double R, vertex& sol)const{ // renv
                     sol = s1;
                 }
                 result = true;
-
-
 
 			}
 
