@@ -1,0 +1,33 @@
+# depslib dependency file v1.0
+1420913815 source:/home/val/BoiteAOUtilBillard/BoiteAOutil.cpp
+	"BoiteAOutil.h"
+
+1420913815 /home/val/BoiteAOUtilBillard/BoiteAOutil.h
+	<iostream>
+	<OPENGL/gl.h>
+	<GLUT/glut.h>
+	<GL/freeglut.h>
+	<GL/gl.h>
+	<cmath>
+	<vector>
+	<algorithm>
+
+1420919518 source:/home/val/BoiteAOUtilBillard/boule.cpp
+	"boule.h"
+	<math.h>
+
+1420913567 /home/val/BoiteAOUtilBillard/boule.h
+	"BoiteAOutil.h"
+
+1420908639 source:/home/val/BoiteAOUtilBillard/trajectoire.cpp
+	"trajectoire.h"
+
+1420908639 /home/val/BoiteAOUtilBillard/trajectoire.h
+	"BoiteAOutil.h"
+
+1420919964 source:/home/val/BoiteAOUtilBillard/main.cpp
+	<time.h>
+	"BoiteAOutil.h"
+	"trajectoire.h"
+	"boule.h"
+

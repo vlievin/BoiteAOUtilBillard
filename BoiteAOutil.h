@@ -97,7 +97,7 @@ float produitscalaire(myVecteur2D *v1, myVecteur2D *v2); // produit scalaire
 
 bool appartientSegment(vertex pointCible, vertex A, vertex B); // on considère le segment ouvert (pour éviter qu'un point appartienne à deux segements)-> TODO gestion des coins séparémment
 
-float distance(vertex A, vertex B);
+float distancePoints(vertex A, vertex B);
 
 void afficherRebondsGL(std::vector<myVecteur2D*> rebonds);
 
@@ -108,7 +108,7 @@ vertex operator+(vertex const& a, myVecteur2D* const& b);
 
 void afficherGL(vertex point);
 
-std::vector<double> solvePoly2(double a, double b, double c);
+std::vector<double> solvePoly2(double a, double b, double c); // résoud une equation polynomiale de degré 2
 
 #endif //BOITEAOUTIL_H
 

@@ -313,7 +313,7 @@ void cadre::afficherGL() const{
 	glEnd();
 }
 
-void cadre::setBords(int i, myVecteur2D* vector){ // TODO : refermeture du cadre
+void cadre::setBords(int i, myVecteur2D* vector){ // TODO : refermeture automatique du cadre
 	bords[i] = vector;
 }
 
@@ -474,7 +474,7 @@ float produitVectoriel(myVecteur2D *v1, myVecteur2D* v2){
 	return v1->getxdir()*v2->getydir() - v1->getydir()*v2->getxdir();
 }
 
-float distance(vertex A, vertex B){
+float distancePoints(vertex A, vertex B){
 	return sqrt((B.x - A.x)*(B.x - A.x) + (B.y - A.y)*(B.y - A.y));
 }
 
@@ -570,12 +570,12 @@ std::vector<double> solvePoly2(double a, double b, double c){
 
 	double delta = b*b - 4 * a*c;
 
-	if (a != 0)
+	if (a != 0) // si le polynome est de degré 2
 	{
 
 		if (delta < 0)
 		{
-			return result;
+			return result; // retourne un vecteur nul (pas de solutions)
 		}
 		else if (delta == 0)
 		{
@@ -594,7 +594,7 @@ std::vector<double> solvePoly2(double a, double b, double c){
 		}
 
 	}
-	else
+	else // a = 0
 		if (b == 0)
 			return result;
 		else

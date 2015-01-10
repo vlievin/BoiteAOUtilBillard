@@ -107,6 +107,9 @@ GLvoid affichage(){
 
 		//tracé des vecteurs
 		v1->afficherGL(0.2f);
+		cout << " |  v1x : "<< v1->getxdir() << " v2 : "<< v1->getydir() << endl;
+		// TODO : résoudre le problème de vecteur créé infini : v1 est parfois infini sans raisons apparentes
+
 		//vr->afficherGL();
 
 		int idbord = 0;
@@ -115,9 +118,9 @@ GLvoid affichage(){
 
 				//REBONDS
 
-		trajectoire* t1;
-		t1 = new trajectoire(v1, cadreJeu, 3);
-		t1->afficherGL();
+		//trajectoire* t1;
+		//t1 = new trajectoire(v1, cadreJeu, 3);
+		//t1->afficherGL();
 
 
 		//boules
@@ -127,6 +130,20 @@ GLvoid affichage(){
 		b1 = new boule(0.2f, vb);
 		glLineWidth(1.0f);
 		b1->afficherGL();
+
+		//intersection avec la boule
+		vertex interBoule;
+		bool binter = false;
+		float r = 0.0d;
+		cout << "-- intersections de boules --" << endl;
+		binter = b1->getIntersection(v1, r , interBoule);
+
+		if (binter)
+		{
+		cout << "in main : afficher boules :" <<  "  inter y : "<< interBoule.x << " inter x : "<< interBoule.y << endl;
+            afficherGL(interBoule);
+		}
+
 
 
 
@@ -176,21 +193,22 @@ GLvoid clavier(unsigned char touche, int x, int y) {
 
 	case '+':
 		// Augmenter la taille des sommets affiches
-		pointSize += 1.0f;
-		glPointSize(pointSize);
+		offset += 0.05f;
+
 		break;
 	case '-':
 		// Augmenter la taille des sommets affiches
-		pointSize -= 1.0f;
-		if (pointSize <= 0.0f)
-			pointSize = 1.0f;
-		glPointSize(pointSize);
+		offset -= 0.05f;
+
+
 		break;
 	case '8':
 		t += offset;
 		break;
 
-
+    case '2':
+		t -= offset;
+		break;
 
 	case 'q': // quitter
 	case 27:
@@ -269,7 +287,7 @@ GLvoid redimensionner(int w, int h) {
 
 
 	// Placement de la caméra
-	gluLookAt(0, 0, 2, 0, 0, 0, 0, 1, 0);
+	gluLookAt(0, 0, 2, 0, 0, 0, 1, 0, 0);
 
 	// Retourne a la pile modelview
 	glMatrixMode(GL_MODELVIEW);
