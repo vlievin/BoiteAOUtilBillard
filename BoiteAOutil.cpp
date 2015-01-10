@@ -37,9 +37,9 @@ myVecteur2D::myVecteur2D(myVecteur2D* v1, myVecteur2D* v2){ // créer un rebond :
 
 	//std::cout << "ps : " << produitscalaire(v1, v2) << std::endl;
 		float alpha = acos(abs(produitscalaire(v1, v2))); // TODO : prendre en compte la valeur négative ou poistive de l'angle
-		
-		
-		
+
+
+
 		//if (produitscalaire(v1, v2) < 0)
 			alpha = -alpha;
 		std::cout << "alpha : " << alpha << " deg " << alpha * 360 / (2 * 3.14f) << std::endl;
@@ -50,7 +50,7 @@ myVecteur2D::myVecteur2D(myVecteur2D* v1, myVecteur2D* v2){ // créer un rebond :
 		this -> origin = originrebond;
 		this -> xdir = cos(alpha)*v2->getxdir() + sin(alpha)*dirOrtho.x;
 		this -> ydir = sin(alpha)*dirOrtho.y + sin(alpha) * v2->getydir();
-		
+
 		//xdir = dirOrtho.x;
 		//ydir = dirOrtho.y;
 		std::cout << "vec : " << getNorme() << std::endl;
@@ -61,7 +61,7 @@ myVecteur2D::myVecteur2D(myVecteur2D* v1, myVecteur2D* v2){ // créer un rebond :
 	{
 
 	}
-	
+
 
 }
 */
@@ -82,7 +82,7 @@ myVecteur2D::myVecteur2D(myVecteur2D* v1, myVecteur2D* v2){ // créer un rebond :
 		v1->normalise();
 		v2->normalise();
 		//std::cout << "V1 : " << v1->getNorme() << "  v2 : " << v2->getNorme() << " v1x : " << v1->getxdir() << " v1y : " << v1->getydir() << " v2x : " << v2->getxdir() << " v2y : " << v2->getydir() << std::endl;
-		
+
 		vertex dirOrtho;
 		dirOrtho.x =  v2->getydir();
 		dirOrtho.y = - v2->getxdir();
@@ -90,7 +90,7 @@ myVecteur2D::myVecteur2D(myVecteur2D* v1, myVecteur2D* v2){ // créer un rebond :
 		float psv12 = produitscalaire(v1,v2); //produit scalaire de v1 sur v2
 		float psv12ortho = v1->getxdir() * dirOrtho.x + v1->getydir() * dirOrtho.y;
 
-		
+
 
 		xdir = psv12*v2->getxdir() - psv12ortho * dirOrtho.x;
 		ydir = psv12*v2->getydir() - psv12ortho * dirOrtho.y;
@@ -99,7 +99,7 @@ myVecteur2D::myVecteur2D(myVecteur2D* v1, myVecteur2D* v2){ // créer un rebond :
 		//std::cout << "psv12 : " << psv12 << "  ortho " << psv12ortho << "xdir : " << xdir << "direct " << psv12*v2->getxdir() + psv12ortho * dirOrtho.x<< std::endl;
 
 		normalise();
-		
+
 	}
 	else
 	{
@@ -151,7 +151,7 @@ void myVecteur2D::setRebond(myVecteur2D* v1, myVecteur2D* v2){ // créer un rebon
 	{
 
 	}
-	
+
 
 }
 */
@@ -186,8 +186,8 @@ void myVecteur2D::normalise(){
 	{
 		std::cout << "vecteur nul" << std::endl;
 	}
-	else 
-	{ 
+	else
+	{
 		float norm = sqrt(abs(xdir*xdir + ydir*ydir));
 		xdir = xdir / norm;
 		ydir = ydir / norm;
@@ -248,7 +248,7 @@ cadre::cadre(myVecteur2D* a, myVecteur2D* b, myVecteur2D* c, myVecteur2D* d)   {
 	bords.push_back(b);
 	bords.push_back(c);
 	bords.push_back(d);
-	
+
 }
 */
 cadre::cadre(vertex a, vertex b, vertex c, vertex d)   {
@@ -279,7 +279,7 @@ vertex cadre::getcoins(int i) const{
 }
 
 void cadre::afficherVecteursGL()const{
-	
+
 	//for (std::vector<myVecteur2D*>::iterator it = bords.begin(); it != bords->end(); ++it){
 		//(*it)->afficherGL();
 	//}
@@ -297,7 +297,7 @@ void cadre::afficherVecteursGL()const{
 	glVertex2f(getcoins(3).x, getcoins(3).y);
 	glVertex2f(getcoins(0).x, getcoins(0).y);
 	glEnd();*/
-	//debug 
+	//debug
 	//std::cout << "affichage du cadre" << std::endl;
 }
 
@@ -344,7 +344,7 @@ int cadre::getBordVise(myVecteur2D* vec) const{
 			}
 		}
 	}
-	
+
 		std::cout << "in : getBordsVise : nombre d'intersections : " << nbinter << std::endl;
 		return bord;
 }
@@ -374,7 +374,7 @@ std::vector<myVecteur2D*> cadre::rebonds(myVecteur2D* v ,int nb)const{
 				tmp = vr;
 				std::cout << "vr : " << " x : " << vr->getxdir() << " y : " << vr->getydir() << " origin : " << vr->getorigin().x << " | " << vr->getorigin().y << std::endl;
 			}
-			
+
 		}
 	}
 	return result;
@@ -387,7 +387,7 @@ DEFINTION DES FONCTIONS BOITE A OUTIL
 
 
 int intersectionDroites( myVecteur2D* v1, myVecteur2D* v2, vertex& sol) {
-	
+
 
 	if (produitVectoriel(v1, v2) == 0) // on exclut le cas où il n'y a pas de solution : vecteur colinéaires (inclus le vecteur nul)
 		return 0;
@@ -410,16 +410,16 @@ int intersectionDroites( myVecteur2D* v1, myVecteur2D* v2, vertex& sol) {
 			t1 = (1 / (v1->getxdir() - k * v1->getydir())) * (v2->getorigin().x - v1->getorigin().x + k * (v1->getorigin().y - v2->getorigin().y)); //le diviseur est différent de zéro car les droites sont non colinéraires
 			t2 = 1 / (v2->getxdir())*(v1->getorigin().x + t1* v1->getxdir() - v2->getorigin().x);
 
-			//debug 
+			//debug
 			//std::cout << "cas 1" << std::endl;
-			
+
 		}
 
 		else if (v1->getxdir() == 0) //v2x !0 car ils seraient colinéaires (test OK)
 		{
 			t2 = 1 / v2->getxdir() * (v1->getorigin().x + t1 * v1->getxdir() - v2->getorigin().x);
 			t1 = 1 / v1->getydir() * (v2->getorigin().y - v1->getorigin().y + t2* v2->getydir());
-			//debug 
+			//debug
 			//std::cout << "cas 2" << std::endl;
 			//std::cout << v2->getydir() << std::endl;
 		}
@@ -427,22 +427,22 @@ int intersectionDroites( myVecteur2D* v1, myVecteur2D* v2, vertex& sol) {
 		{
 			t2 = 1 / v2->getydir() * (v1->getorigin().y + t1* v1->getydir() - v2->getorigin().y);
 			t1 = 1 / v1->getxdir() * (v2->getorigin().x - v1->getorigin().x + t2*v2->getxdir());
-			//debug 
+			//debug
 			//std::cout << "cas 3" << std::endl;
-			
+
 		}
 		else if (v2->getydir() == 0) // par symmétrie (réaliser des tests)
 		{
 			t1 = 1 / v1->getydir() * (v1->getorigin().y + t2* v2->getxdir() - v2->getorigin().y);
 			t2 = 1 / v2->getxdir() * (v2->getorigin().x - v1->getorigin().x + t1*v2->getxdir());
-			//debug 
+			//debug
 			//std::cout << "cas 4" << std::endl;
 		}
 		else if (v2->getxdir() == 0) // par symmétrie (réaliser des tests)
 		{
 			t1 = 1 / v1->getxdir() * (v1->getorigin().x + t2* v2->getydir() - v2->getorigin().x);
 			t2 = 1 / v2->getydir() * (v2->getorigin().y - v1->getorigin().y + t1*v2->getydir());
-			//debug 
+			//debug
 			//std::cout << "cas 5" << std::endl;
 		}
 
@@ -513,7 +513,7 @@ bool appartientSegment(vertex pointCible, vertex A, vertex B){
 	{
 		float t1 = (pointCible.x - B.x) * (1 / (A.x - B.x));
 		//std::cout << "t1 x :" << t1 << std::endl;
-		
+
 
 		if (t1 < 1 && t1>0 ) //&& egalerr(pointCible.y , A.y) )
 			return true;
@@ -564,7 +564,7 @@ void afficherGL(vertex point){
 }
 
 std::vector<double> solvePoly2(double a, double b, double c){
-	
+
 	std::vector<double> result;
 	result.clear();
 
@@ -587,7 +587,7 @@ std::vector<double> solvePoly2(double a, double b, double c){
 		{
 			double tmp = (-b + sqrt(delta)) / (2 * a);
 			result.push_back(tmp);
-			double tmp = (- b - sqrt(delta)) / (2 * a);
+			tmp = (- b - sqrt(delta)) / (2 * a);
 			result.push_back(tmp);
 
 			return result;

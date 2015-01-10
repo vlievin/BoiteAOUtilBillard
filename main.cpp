@@ -1,9 +1,8 @@
 //
 //  main.cpp
-//  ANREC_OGL_FirstEx
 //
-//  Created by Jean-Marie Normand on 24/09/2014.
-//  Copyright (c) 2014 Centrale Innovation. All rights reserved.
+//  Created by Valentin LIEVIN on 15/12/2014
+//
 //
 
 #include <time.h>
@@ -65,8 +64,8 @@ float offset = 0.1;
 
 // Definition de la fonction d'affichage
 GLvoid affichage(){
-	
-	system("cls");
+
+	system("clear");
 	//création d'un vecteur test
 	//cout << "1" << endl;
 	myVecteur2D* v1;
@@ -77,12 +76,12 @@ GLvoid affichage(){
 	//cout << "3 : " << v1->getNorme() << endl;
 	vertex v1or = { 0.0f, 0.0f };
 	v1->setorigin(v1or);
-	
+
 	cadre* cadreJeu;
 	cadreJeu = new cadre(contour[0], contour[1], contour[2], contour[3]);
 
-	
-	
+
+
 
 	// Effacement du frame buffer
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -94,33 +93,33 @@ GLvoid affichage(){
 	//glRotatef(-angleY, 1.0f, 0.0f, 0.0f);
 	//glRotatef(-angleX, 0.0f, 1.0f, 0.0f);
 
-	
+
 	//on bouge la camera
 	glTranslatef(0.0, 0.0, -3.0);
-		
+
 	glColor3f(1.0f, 1.0f, 1.0f);
 	cadreJeu->afficherGL();
 
 
 	// rebonds etc
-		
-	
-		
+
+
+
 		//tracé des vecteurs
 		v1->afficherGL(0.2f);
 		//vr->afficherGL();
-		
+
 		int idbord = 0;
 		cadreJeu->afficherVecteursGL();
 		cadreJeu->afficherGL();
 
 				//REBONDS
 
-		//trajectoire* t1;
-		//t1 = new trajectoire(v1, cadreJeu, 3);
-		//t1->afficherGL();
-				
-				
+		trajectoire* t1;
+		t1 = new trajectoire(v1, cadreJeu, 3);
+		t1->afficherGL();
+
+
 		//boules
 
 		vertex vb = { 0.4f, 0.4f };
@@ -128,19 +127,19 @@ GLvoid affichage(){
 		b1 = new boule(0.2f, vb);
 		glLineWidth(1.0f);
 		b1->afficherGL();
-		
-		
-		
 
-		
+
+
+
+
 	glFlush();
 	glutSwapBuffers();
 
 	delete cadreJeu;
 	delete v1;
 	delete b1;
-	
-	
+
+
 
 }
 
@@ -205,7 +204,7 @@ GLvoid clavier(unsigned char touche, int x, int y) {
 
 //animation
 GLvoid time(){
-	
+
 }
 
 
@@ -229,7 +228,7 @@ GLvoid souris(int bouton, int etat, int x, int y){
 GLvoid deplacementSouris(int x, int y) {
 	// si le bouton gauche est appuye et qu'on se deplace
 	// alors on doit modifier les angles de rotations du cube
-	// en fonction de la derniere position de la souris 
+	// en fonction de la derniere position de la souris
 	// et de sa position actuelle
 	if (boutonClick) {
 		angleX += (x - oldX);
@@ -278,7 +277,7 @@ GLvoid redimensionner(int w, int h) {
 
 
 int main(int argc, char *argv[])
-{  
+{
 	// Initialisation de GLUT
 	glutInit(&argc, argv);
 	// Choix du mode d'affichage (ici RVB)
@@ -299,7 +298,7 @@ int main(int argc, char *argv[])
 	// Définition des fonctions de callbacks
 	glutDisplayFunc(affichage);
 	glutKeyboardFunc(clavier);
-	
+
 	// Nouveaux callbacks
 	//glutMouseFunc(souris);
 	//glutMotionFunc(deplacementSouris);
