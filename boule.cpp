@@ -48,6 +48,7 @@ bool boule::getIntersection(myVecteur2D* u, double R, vertex& sol)const{ // renv
 
 
 	double r = R + rayon;
+	bool result = false;
 
 	if (u->isNul())
 		{
@@ -56,11 +57,9 @@ bool boule::getIntersection(myVecteur2D* u, double R, vertex& sol)const{ // renv
 		}
 	else
 	{
-	cout << " in boule.getIntersection() : 1" << endl << endl;
+
 		if (u->getydir() != 0) //si toutes les composantes sont non-nulles
 		{
-
-
 
             //voir brouillon pour le détail des calculs
 
@@ -85,19 +84,22 @@ bool boule::getIntersection(myVecteur2D* u, double R, vertex& sol)const{ // renv
 			// solutions en fonction du nombre de solutions
 			if (nbsol== 0)
 			{
-                return false;
+                result = false;
                 //debug
                 cout<< "in Boule : getIntersection() : 0 solutions (poly)"<<endl;
 			}
             else if (nbsol ==1 )
 			{
-                return true;
+
                 vertex s;
                 //debug
                 cout<< "in Boule : getIntersection() : 1 solutions (poly)"<<endl;
                 s.y = solutions.at(0);
                 s.x = Q + l*solutions.at(0);
                 sol = s;
+
+                result = true;
+
 			}
 			else if (nbsol == 2)// la bonne solution est le point le plus proche de l'origine du vecteur (faire un schéma)
 			{
@@ -126,13 +128,13 @@ bool boule::getIntersection(myVecteur2D* u, double R, vertex& sol)const{ // renv
                     sol = s1;
                 }
 
-                return true;
+                result = true;
 
 
 			}
 			else
 			{
-                return false;
+                result = false;
                 std::cout<<"in Boule::getIntersection() : la fonction solvePoly2 renvoi plus de 2 solutions"<<std::endl;
             }
 
@@ -142,8 +144,87 @@ bool boule::getIntersection(myVecteur2D* u, double R, vertex& sol)const{ // renv
 		else
 		{
             std::cout<<"in Boule::getIntersection() : ydir = 0"<<std::endl;
+
+            double da = 1;
+            double db = -2 * centre.x;
+            double dc = centre.x* centre.x - r*r + pow( u->getorigin().y - centre.y, 2 );
+
+
+
+
+			vector<double> solutions = solvePoly2(da, db, dc);
+			int nbsol = solutions.size();
+
+			for (int i = 0 ; i< solutions.size() ; i ++)
+			{cout << " in boule.getintersection : result solve poly : " <<solutions[i]<< endl;}
+
+            cout << " in boule.getIntersection() : taille du vecteur solution "<< nbsol << endl ;
+			// solutions en fonction du nombre de solutions
+			if (nbsol== 0)
+			{
+                result = false;
+                //debug
+                cout<< "in Boule : getIntersection() : 0 solutions (poly)"<<endl;
+			}
+            else if (nbsol ==1 )
+			{
+
+                vertex s;
+                //debug
+                cout<< "in Boule : getIntersection() : 1 solutions (poly)"<<endl;
+                s.x = solutions.at(0);
+                s.y = u->getorigin().y;
+                sol = s;
+                result = true;
+			}
+			else if (nbsol == 2)// la bonne solution est le point le plus proche de l'origine du vecteur (faire un schéma)
+			{
+			//debug
+                cout<< "in Boule : getIntersection() : 2 solutions (poly)"<<endl;
+
+                // calcul de la solution 1 et de sa distance par rapport à l'origine de u
+                vertex s1;
+                s1.x = solutions.at(0);
+                s1.y = u->getorigin().y;
+                float d1 = distancePoints(s1,u->getorigin());
+
+                //solution 2
+                vertex s2;
+                s2.x = solutions.at(1);
+                s2.y = u->getorigin().y;
+                float d2 = distancePoints(s2,u->getorigin());
+
+                // sélection de la solution
+                if (d1 > d2)
+                {
+                    sol = s2;
+                }
+                else
+                {
+                    sol = s1;
+                }
+                result = true;
+
+
+
+			}
+
+
 		}
 
+
+
 	}
+	//prise en compte du sens du vecteur
+	if(result)
+		{
+            myVecteur2D* interv;
+            interv = new myVecteur2D(sol.x - u->getorigin().x , sol.y - u->getorigin().y );
+            if (produitscalaire(interv, u) < 0)
+            {result = false;}
+
+            delete interv;
+		}
+		return result;
 
 }

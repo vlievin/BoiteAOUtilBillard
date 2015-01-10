@@ -125,7 +125,7 @@ GLvoid affichage(){
 
 		//boules
 
-		vertex vb = { 0.4f, 0.4f };
+		vertex vb = { 0.6f, 0.6f };
 		boule* b1;
 		b1 = new boule(0.2f, vb);
 		glLineWidth(1.0f);
@@ -134,7 +134,7 @@ GLvoid affichage(){
 		//intersection avec la boule
 		vertex interBoule;
 		bool binter = false;
-		float r = 0.0d;
+		float r = 0.1d;
 		cout << "-- intersections de boules --" << endl;
 		binter = b1->getIntersection(v1, r , interBoule);
 
@@ -142,6 +142,10 @@ GLvoid affichage(){
 		{
 		cout << "in main : afficher boules :" <<  "  inter y : "<< interBoule.x << " inter x : "<< interBoule.y << endl;
             afficherGL(interBoule);
+            boule* b2;
+            b2 = new boule(r, interBoule);
+            glLineWidth(1.0f);
+            b2->afficherGL();
 		}
 
 
