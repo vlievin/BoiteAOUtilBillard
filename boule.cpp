@@ -52,6 +52,36 @@ void boule::afficherGL()const{
 
 }
 
+void boule::afficherGL(float r, float v, float b)const{
+	//debug
+	cout << "boule : " << " centre xy : " << centre.x << " | " << centre.y << " rayon : " << rayon << endl << endl;
+
+	float angle;
+	float angle2;
+	int nb_faces = 32;
+
+	glPointSize(5);
+
+	glColor3f(r, v, b);
+	glBegin(GL_POINTS);
+
+	glVertex2f(centre.x, centre.y);
+
+	glEnd();
+
+	glBegin(GL_LINE_LOOP);
+	for (int i = 0; i < nb_faces; i++)
+	{
+		angle = 2 * M_PI*i / nb_faces;
+		angle2 = 2 * M_PI*(i+1) / nb_faces;
+
+		glVertex2f(centre.x + cos(angle)*rayon, centre.y + sin(angle)*rayon);
+
+	}
+	glEnd();
+
+}
+
 bool boule::getIntersection(myVecteur2D* u, double R, vertex& sol)const{ // renvoi un le point de l'intersection entre la boule un un vecteur directeur.
 
 

@@ -139,7 +139,7 @@ GLvoid affichage(){
 
 		trajectoire* t1;
 		t1 = new trajectoire(v1, j, r, 3);
-		t1->afficherGL();
+		t1->afficherGL(r);
 
 
 		//boules

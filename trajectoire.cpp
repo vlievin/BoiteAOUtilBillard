@@ -125,6 +125,42 @@ void trajectoire::afficherGL() const{
 	glEnd();
 }
 
+void trajectoire::afficherGL(float r) const{
+
+for(int i = 0; i < (SuiteIntersections.size()-1); i++)
+	{
+		glPointSize(8);
+		glBegin(GL_POINTS);
+		glColor3f(1.0f, 0.0f, 0.0f);
+		glVertex2f(SuiteIntersections[i].x, SuiteIntersections[i].y);
+		glEnd();
+		glBegin(GL_LINES);
+		glColor3f(0.0f, 1.0f, 0.0f);
+		glVertex2f(SuiteIntersections[i].x, SuiteIntersections[i].y);
+		glVertex2f(SuiteIntersections[i+1].x, SuiteIntersections[i+1].y);
+		glEnd();
+
+		boule* b;
+		b = new boule(r, SuiteIntersections[i]);
+		glLineWidth(1.0f);
+		b->afficherGL(0.0f,0.6f,0.0f);
+		delete b;
+
+	}
+	glPointSize(8);
+	glBegin(GL_POINTS);
+	glColor3f(1.0f, 0.0f, 0.0f);
+	glVertex2f(SuiteIntersections[SuiteIntersections.size() - 1].x, SuiteIntersections[SuiteIntersections.size() - 1].y);
+	glEnd();
+
+        boule* b;
+		b = new boule(r, SuiteIntersections[SuiteIntersections.size()-1]);
+		glLineWidth(1.0f);
+		b->afficherGL(0.0f,9.0f,0.0f);
+		delete b;
+
+}
+
 std::vector<vertex> trajectoire::getTrajectoire() const{
 	return SuiteIntersections;
 }

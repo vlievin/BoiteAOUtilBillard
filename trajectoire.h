@@ -18,6 +18,7 @@ public:
 	trajectoire(myVecteur2D* v1, jeu* j,float r , int nbRebonds);
 	std::vector<vertex> getTrajectoire() const;
 	void afficherGL() const;
+	void afficherGL(float r) const;
 	~trajectoire();
 };
 
