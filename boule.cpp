@@ -23,7 +23,7 @@ return centre;
 
 void boule::afficherGL()const{
 	//debug
-	cout << "boule : " << " centre xy : " << centre.x << " | " << centre.y << " rayon : " << rayon << endl << endl;
+	//cout << "boule : " << " centre xy : " << centre.x << " | " << centre.y << " rayon : " << rayon << endl << endl;
 
 	float angle;
 	float angle2;
@@ -54,7 +54,7 @@ void boule::afficherGL()const{
 
 void boule::afficherGL(float r, float v, float b)const{
 	//debug
-	cout << "boule : " << " centre xy : " << centre.x << " | " << centre.y << " rayon : " << rayon << endl << endl;
+	//cout << "boule : " << " centre xy : " << centre.x << " | " << centre.y << " rayon : " << rayon << endl << endl;
 
 	float angle;
 	float angle2;
@@ -121,7 +121,7 @@ bool boule::getIntersection(myVecteur2D* u, double R, vertex& sol)const{ // renv
 			//for (int i = 0 ; i< solutions.size() ; i ++)
 			//{cout << " in boule.getintersection : result solve poly : " <<solutions[i]<< endl;}
 
-            cout << " in boule.getIntersection() : taille du vecteur solution "<< nbsol << endl ;
+            //cout << " in boule.getIntersection() : taille du vecteur solution "<< nbsol << endl ;
 			// solutions en fonction du nombre de solutions
 			if (nbsol== 0)
 			{
@@ -199,7 +199,7 @@ bool boule::getIntersection(myVecteur2D* u, double R, vertex& sol)const{ // renv
 			//for (int i = 0 ; i< solutions.size() ; i ++)
 			//{cout << " in boule.getintersection : result solve poly : " <<solutions[i]<< endl;}
 
-            cout << " in boule.getIntersection() : taille du vecteur solution "<< nbsol << endl ;
+            //cout << " in boule.getIntersection() : taille du vecteur solution "<< nbsol << endl ;
 			// solutions en fonction du nombre de solutions
 			if (nbsol== 0)
 			{

@@ -179,9 +179,11 @@ void myVecteur2D::normalise(){
 	}
 	else
 	{
-		float norm = sqrt(abs(xdir*xdir + ydir*ydir));
-		xdir = xdir / norm;
-		ydir = ydir / norm;
+		float norm = sqrt(xdir*xdir + ydir*ydir);
+		float a = xdir / norm;
+		float b = ydir / norm;
+		xdir = a;
+		ydir = b;
 		//std::cout << "vecteur non nul : "<< getNorme() << std::endl;
 	}
 }
@@ -317,7 +319,7 @@ int cadre::getBordVise(myVecteur2D* vec) const{
 	int l = 0;
 	//
 	int bord = -1;
-	std::cout << "in : getBordsVise : taille du vecteur bords : " << bords.size() << std::endl;
+	//std::cout << "in : getBordsVise : taille du vecteur bords : " << bords.size() << std::endl;
 	for (k = 0; k < bords.size(); ++k)
 	{
 		l = k+1;
@@ -331,12 +333,12 @@ int cadre::getBordVise(myVecteur2D* vec) const{
 			{
 				bord = k;
 				nbinter += 1;
-				std::cout << "in : getBordsVise : intersections : k : " << k << std::endl;
+				//std::cout << "in : getBordsVise : intersections : k : " << k << std::endl;
 			}
 		}
 	}
 
-		std::cout << "in : getBordsVise : nombre d'intersections : " << nbinter << std::endl;
+		//std::cout << "in : getBordsVise : nombre d'intersections : " << nbinter << std::endl;
 		return bord;
 }
 
@@ -470,7 +472,7 @@ if (vxortho !=0 && vyortho != 0 )
     vyortho = -vyortho;
     }
 
-    std::cout << "# in intersectionDroiteBoule : vortho : " << vxortho << " | " << vyortho << " ps2 : " << ps2 <<std::endl;
+    //std::cout << "# in intersectionDroiteBoule : vortho : " << vxortho << " | " << vyortho << " ps2 : " << ps2 <<std::endl;
 
 }
 else { std::cout << "in intersectionDroiteBoule : vortho est nul "<<std::endl; }

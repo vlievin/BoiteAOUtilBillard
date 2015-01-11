@@ -10,7 +10,7 @@ trajectoire::trajectoire(myVecteur2D* v1, cadre* cadreJeu, int nbRebonds){
 	vector<vertex> result ;
 	result.clear();
 	myVecteur2D* tmp;
-	tmp = v1; //oui ? on dirait
+	tmp = v1;
 	result.push_back(v1->getorigin());
 	//cout << "--------------- direction du vecteur v1( x|y) : " << v1->getxdir() << " | " << v1->getydir() << endl << endl;
 
@@ -56,18 +56,23 @@ trajectoire::trajectoire(myVecteur2D* v1, jeu* j, float r , int nbRebonds){
 	tmp = v1; //le premier point de la trajectoire est l'origine du vecteur
 	result.push_back(v1->getorigin());
 
+	int numBouleVisee = -1;
+
 	for (int k = 0; k < nbRebonds; k++)
 	{
 		myVecteur2D* vr;
 		vertex inter;
 
-		int ind = j->AimBoule(v1, r);
+		//debug
+		cout <<endl<<" *** itération n° : "<< k <<" *** "<< "---------------->" << "in trajectoire constructeur jeu : tmp : " << tmp->getxdir()<< " | " << tmp->getydir()<< endl ;
+		cout<< "########in trajectoire : numboulevisee = " << numBouleVisee<< endl<<endl;
+
+		int ind = j->AimBouleSauf(v1, r, numBouleVisee);
 
 		if(ind <0) // on ne vise pas de boule
 		{
 
-            myVecteur2D* vr;
-            vertex inter;
+
 
             int bord = j->getCadre()->getBordVise(tmp);
             if (bord >= 0)
@@ -79,12 +84,20 @@ trajectoire::trajectoire(myVecteur2D* v1, jeu* j, float r , int nbRebonds){
                 j->getCadre()->getBords(bord)->afficherGL(2.0f); // il faut veiller à changer l'origine pour prendre en compte le rayon de la boule
                 vr = new myVecteur2D(tmp, j->getCadre()->getBords(bord));
                 vr->setorigin(inter); //on change l'intersection par celle donnée par intersectionDroiteBoule
-                cout << " ##### in trajectoire jeu : inter : " << inter.x << " | " << inter.y << "  vorigin : " << vr->getorigin().x << " | " << vr->getorigin().y << " k : "<< k<< endl<< endl;
-                    //out << "in : trajectoire : numéro de bord : " << bord << " | incrément : " << k <<
-                    //endl << " -------------- intersection  (x|y) : " << inter.x << " | " << inter.y << endl <<
-                    //endl << "--------------- direction du vecteur rebond ( x|y) : " << vr->getxdir() << " | " << vr->getydir() << endl << endl;
+                //cout << " ##### in trajectoire jeu : inter : " << inter.x << " | " << inter.y << "  vorigin : " << vr->getorigin().x << " | " << vr->getorigin().y << " k : "<< k<< endl<< endl;
+                    cout << "in : trajectoire : numéro de bord : " << bord << " | incrément : " << k <<
+                    endl << " -------------- intersection  (x|y) : " << inter.x << " | " << inter.y << endl <<
+                    endl << "--------------- direction du vecteur rebond vr ( x|y) : " << vr->getxdir() << " | " << vr->getydir() << endl << endl;
                 tmp = vr;
-                result.push_back(vr->getorigin());
+                cout << "--------------- direction du vecteur rebond TMP ( x|y) : " << tmp->getxdir() << " | " << tmp->getydir() << endl << endl;
+                vr->normalise();
+                vr->afficherGL(0.2f);
+                tmp->normalise();
+                tmp->afficherGL(0.3f);
+                result.push_back(inter);
+
+                numBouleVisee = -1; //on a effectué un rebond : aucune boule n'est visée
+
             }
             else
             {
@@ -94,12 +107,34 @@ trajectoire::trajectoire(myVecteur2D* v1, jeu* j, float r , int nbRebonds){
 		} // endif Aimboule <0
 		else
 		{
-		cout << "in constructeur trajectoire depuis jeu : boule visée : " <<  ind << endl;
+            cout << "in constructeur trajectoire depuis jeu : boule visée : " <<  ind << endl;
+            j->getBoules().at(ind)->getIntersection(v1, r , inter); //on récupére la boule visée
+            vr = new myVecteur2D(tmp, j->getBoules().at(ind) , r); // on crée le vecteur résultant
+            //cout << "######0" << "in trajectoire constructeur jeu : vr : " << vr->getxdir()<< " | " << vr->getydir()<< endl<<endl ;
+            vr->normalise();
+            //cout << "######1" << "in trajectoire constructeur jeu : vr : " << vr->getxdir()<< " | " << vr->getydir()<< endl<<endl ;
+            vr->afficherGL(0.2f);
+            tmp = vr;
+            tmp->normalise();
+            tmp->afficherGL(0.3f);
+
+            //cout << "######2" << "in trajectoire constructeur jeu : vr : " << vr->getxdir()<< " | " << vr->getydir()<< endl<<endl ;
+            //cout << "######3" << "in trajectoire constructeur jeu : tmp : " << tmp->getxdir()<< " | " << tmp->getydir()<< endl<<endl ;
+
+            result.push_back(vr->getorigin());
+            //problème : on ne doit pas prendre en compte la boule percutée l'itération suivante
+            //solution :
+            numBouleVisee = ind;
+
+            //delete vr;
+
 		}
+
 
     } //endfor nbRebonds
 
 	SuiteIntersections = result;
+	//delete tmp;
 
 }
 

@@ -25,6 +25,8 @@
 #endif
 
 
+/// TODO : corriger la fonction intersectionDroiteBoule : la formule est fausse
+
 
 
 typedef struct {

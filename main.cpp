@@ -99,7 +99,7 @@ GLvoid affichage(){
 		j->addBoule(b2);
 
 		int ind = j->AimBoule(v1, r);
-		cout << "in main : AimBoule : indice de la boule visée : " << ind<< endl<<endl ;
+		//cout << "in main : AimBoule : indice de la boule visée : " << ind<< endl<<endl ;
 
 
 
@@ -138,7 +138,7 @@ GLvoid affichage(){
 				//REBONDS
 
 		trajectoire* t1;
-		t1 = new trajectoire(v1, j, r, 3);
+		t1 = new trajectoire(v1, j, r, 6);
 		t1->afficherGL(r);
 
 
@@ -150,29 +150,29 @@ GLvoid affichage(){
 		b2->afficherGL();
 
 		//intersection avec la boule
-		vertex interBoule;
-		bool binter = false;
-
-		cout << "-- intersections de boules --" << endl;
-		binter = b1->getIntersection(v1, r , interBoule);
-
-		if (binter)
-		{
-		cout << "in main : afficher boules :" <<  "  inter y : "<< interBoule.x << " inter x : "<< interBoule.y << endl;
-            afficherGL(interBoule);
-            boule* b2;
-            b2 = new boule(r, interBoule);
-            glLineWidth(1.0f);
-            b2->afficherGL();
-
-            //vecteur directeur du rebond
-		myVecteur2D* vrb;
-		vrb = new myVecteur2D(v1, b1, r);
-		vrb->afficherGL();
-		cout << endl << "in main : vecteur directeur rebond boule : direction : (" << vrb->getxdir()<< " | " << vrb->getydir()
-		<<  ")  origin : (" << vrb->getorigin().x << " | "<< vrb->getorigin().y << ")"<<endl;
-
-		}
+//		vertex interBoule;
+//		bool binter = false;
+//
+//		cout << "-- intersections de boules --" << endl;
+//		binter = b1->getIntersection(v1, r , interBoule);
+//
+//		if (binter)
+//		{
+//		cout << "in main : afficher boules :" <<  "  inter y : "<< interBoule.x << " inter x : "<< interBoule.y << endl;
+//            afficherGL(interBoule);
+//            boule* b2;
+//            b2 = new boule(r, interBoule);
+//            glLineWidth(1.0f);
+//            b2->afficherGL();
+//
+//            //vecteur directeur du rebond
+//		myVecteur2D* vrb;
+//		vrb = new myVecteur2D(v1, b1, r);
+//		vrb->afficherGL();
+//		cout << endl << "in main : vecteur directeur rebond boule : direction : (" << vrb->getxdir()<< " | " << vrb->getydir()
+//		<<  ")  origin : (" << vrb->getorigin().x << " | "<< vrb->getorigin().y << ")"<<endl;
+//
+//		}
 
 
 
@@ -315,7 +315,7 @@ GLvoid redimensionner(int w, int h) {
 
 
 	// Placement de la caméra
-	gluLookAt(0, 0, 2, 0, 0, 0, 1, 0, 0);
+	gluLookAt(0, 0, 1, 0, 0, 0, 1, 0, 0);
 
 	// Retourne a la pile modelview
 	glMatrixMode(GL_MODELVIEW);

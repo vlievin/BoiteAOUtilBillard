@@ -17,9 +17,11 @@ jeu(cadre* cad);
 jeu(cadre* cad, std::vector<boule*> vb);
 ~jeu();
 std::vector<boule*> getBoules() const;
+boule* getBoules(int i) const;
 cadre* getCadre() const;
 void addBoule(boule* b);
 int AimBoule(myVecteur2D* v , float r) const; // retourne l'indice de la boule percutée s'il y en a une , -1 sinon
+int AimBouleSauf(myVecteur2D* v , float r, int j) const; // cherche la boule intersectée sauf celle définie par l'indice i, retourne l'indice de la boule percutée s'il y en a une , -1 sinon
 void afficherGL() const;
 
 };
