@@ -9,6 +9,7 @@
 #include "BoiteAOutil.h"
 #include "trajectoire.h"
 #include "boule.h"
+#include "jeu.h"
 
 using namespace std;
 
@@ -80,6 +81,10 @@ GLvoid affichage(){
 	cadre* cadreJeu;
 	cadreJeu = new cadre(contour[0], contour[1], contour[2], contour[3]);
 
+    // création d'un objet jeu
+
+    jeu* j;
+    j = new jeu(cadreJeu);
 
 
 
@@ -203,12 +208,12 @@ GLvoid clavier(unsigned char touche, int x, int y) {
 
 	case '+':
 		// Augmenter la taille des sommets affiches
-		offset += 0.05f;
+		offset += 0.02f;
 
 		break;
 	case '-':
 		// Augmenter la taille des sommets affiches
-		offset -= 0.05f;
+		offset -= 0.02f;
 
 
 		break;

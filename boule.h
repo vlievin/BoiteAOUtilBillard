@@ -8,7 +8,7 @@ class boule
 public:
 	boule(float r, vertex c);
 	void afficherGL() const;
-	bool getIntersection(myVecteur2D* u, double R, vertex &sol)const; // R est le rayon de la boule lancée
+	bool getIntersection(myVecteur2D* u, double R, vertex &sol)const; // R est le rayon de la boule lancée, vrai s'il y a intersection
 	float getRayon() const;
 	vertex getCentre() const;
 	~boule();

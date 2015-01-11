@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_layout_file>
+	<ActiveTarget name="Debug" />
+	<File name="main.cpp" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="4222" topLine="51" />
+		</Cursor>
+		<Folding>
+			<Collapse line="27" />
+			<Collapse line="233" />
+		</Folding>
+	</File>
+	<File name="jeu.cpp" open="1" top="1" tabpos="8" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="780" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="BoiteAOutil.h" open="1" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="670" topLine="0" />
+		</Cursor>
+		<Folding>
+			<Collapse line="69" />
+		</Folding>
+	</File>
+	<File name="BoiteAOutil.cpp" open="1" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="3499" topLine="63" />
+		</Cursor>
+		<Folding>
+			<Collapse line="69" />
+			<Collapse line="112" />
+			<Collapse line="148" />
+			<Collapse line="259" />
+			<Collapse line="263" />
+			<Collapse line="267" />
+			<Collapse line="271" />
+			<Collapse line="294" />
+			<Collapse line="306" />
+			<Collapse line="310" />
+			<Collapse line="342" />
+			<Collapse line="379" />
+			<Collapse line="452" />
+			<Collapse line="463" />
+			<Collapse line="467" />
+			<Collapse line="472" />
+			<Collapse line="518" />
+			<Collapse line="525" />
+			<Collapse line="539" />
+			<Collapse line="546" />
+			<Collapse line="556" />
+		</Folding>
+	</File>
+	<File name="trajectoire.h" open="1" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="247" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="jeu.h" open="1" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="420" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="boule.h" open="1" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="266" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="boule.cpp" open="1" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="6034" topLine="0" />
+		</Cursor>
+		<Folding>
+			<Collapse line="8" />
+			<Collapse line="19" />
+			<Collapse line="23" />
+		</Folding>
+	</File>
+</CodeBlocks_layout_file>

@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1420926291 source:/home/val/BoiteAOUtilBillard/BoiteAOutil.cpp
+1420927748 source:/home/val/BoiteAOUtilBillard/BoiteAOutil.cpp
 	"BoiteAOutil.h"
 	"boule.h"
 
@@ -17,7 +17,7 @@
 	"boule.h"
 	<math.h>
 
-1420923976 /home/val/BoiteAOUtilBillard/boule.h
+1420935226 /home/val/BoiteAOUtilBillard/boule.h
 	"BoiteAOutil.h"
 
 1420908639 source:/home/val/BoiteAOUtilBillard/trajectoire.cpp
@@ -26,9 +26,16 @@
 1420908639 /home/val/BoiteAOUtilBillard/trajectoire.h
 	"BoiteAOutil.h"
 
-1420926372 source:/home/val/BoiteAOUtilBillard/main.cpp
+1420928135 source:/home/val/BoiteAOUtilBillard/main.cpp
 	<time.h>
 	"BoiteAOutil.h"
 	"trajectoire.h"
+	"boule.h"
+
+1420928713 source:/home/val/BoiteAOUtilBillard/jeu.cpp
+	"jeu.h"
+
+1420928713 /home/val/BoiteAOUtilBillard/jeu.h
+	"BoiteAOutil.h"
 	"boule.h"
 
