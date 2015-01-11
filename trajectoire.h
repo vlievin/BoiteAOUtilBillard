@@ -5,6 +5,7 @@
 #include "BoiteAOutil.h"
 #include "jeu.h"
 
+
 class trajectoire{
 
 private:

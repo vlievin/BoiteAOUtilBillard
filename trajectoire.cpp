@@ -78,7 +78,8 @@ trajectoire::trajectoire(myVecteur2D* v1, jeu* j, float r , int nbRebonds){
                 glColor3f(1.0f, 0.0f, 0.0f);
                 j->getCadre()->getBords(bord)->afficherGL(2.0f); // il faut veiller à changer l'origine pour prendre en compte le rayon de la boule
                 vr = new myVecteur2D(tmp, j->getCadre()->getBords(bord));
-                vr ->setorigin(inter);
+                vr->setorigin(inter); //on change l'intersection par celle donnée par intersectionDroiteBoule
+                cout << " ##### in trajectoire jeu : inter : " << inter.x << " | " << inter.y << "  vorigin : " << vr->getorigin().x << " | " << vr->getorigin().y << " k : "<< k<< endl<< endl;
                     //out << "in : trajectoire : numéro de bord : " << bord << " | incrément : " << k <<
                     //endl << " -------------- intersection  (x|y) : " << inter.x << " | " << inter.y << endl <<
                     //endl << "--------------- direction du vecteur rebond ( x|y) : " << vr->getxdir() << " | " << vr->getydir() << endl << endl;

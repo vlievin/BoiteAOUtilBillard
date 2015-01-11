@@ -451,16 +451,34 @@ int intersectionDroites( myVecteur2D* v1, myVecteur2D* v2, vertex& sol) {
 
 int intersectionDroiteBoule(myVecteur2D* v1 , myVecteur2D* v2, float r , vertex& sol){ // v2 représente le vecteur directeur d'un bord
 
-return intersectionDroites(v1, v2, sol); // on utilise la fonction précédente
+int result = intersectionDroites(v1, v2, sol); // on utilise la fonction précédente
 
-// on va créer un vecteur perpendiculaire au bord pour pouvor placer le centre de la boule lors du rayon
-float ps = produitscalaire(v1, v2);
+float vxortho = - v2->getydir();
+float vyortho = v2->getxdir();
 
-float vxortho = v1->getxdir() - ps * v2->getxdir();
-float vyortho = v2->getydir() - ps * v2->getydir();
+if (vxortho !=0 && vyortho != 0 )
+{
+    float abs = sqrt(vxortho*vxortho + vyortho*vyortho);
+    vxortho =  vxortho / abs;
+    vyortho =  vyortho / abs;
+
+    //prendre en compte les sens des vecteurs à l'aide du produit scalaire
+
+    float ps2 = v1->getxdir() * vxortho + v1->getydir() * vyortho;
+    if(ps2>0 ){
+    vxortho = -vxortho;
+    vyortho = -vyortho;
+    }
+
+    std::cout << "# in intersectionDroiteBoule : vortho : " << vxortho << " | " << vyortho << " ps2 : " << ps2 <<std::endl;
+
+}
+else { std::cout << "in intersectionDroiteBoule : vortho est nul "<<std::endl; }
 
 sol.x += r * vxortho;
 sol.y += r * vyortho;
+
+return result;
 
 
 }
