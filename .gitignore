@@ -14,3 +14,8 @@ Debug/vc120.pdb
 Debug/
 BoiteAOutilBillard.cbp
 BoiteAOutilBillard.depend
+html/
+latex/
+obj/
+bin/
+Doxyfile

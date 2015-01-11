@@ -97,6 +97,7 @@ float produitVectoriel(myVecteur2D* v1, myVecteur2D* v2); //produit mixte
 
 int intersectionDroites( myVecteur2D* v1,  myVecteur2D* v2, vertex& sol); //1 si l'intersction existe est est dans le sens du premier vecteur, 0 si elle n'existe pas, 1 si l'intersection se trouve dans l'autre sens
 
+int intersectionDroiteBoule(myVecteur2D* v1 , myVecteur2D* v2, float r , vertex& sol); // même fonction que ci dessus en prenant en compte le rayon de la boule
 
 float produitscalaire(myVecteur2D *v1, myVecteur2D *v2); // produit scalaire
 

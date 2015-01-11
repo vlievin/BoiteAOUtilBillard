@@ -77,6 +77,7 @@ GLvoid affichage(){
 	//cout << "3 : " << v1->getNorme() << endl;
 	vertex v1or = { 0.0f, 0.0f };
 	v1->setorigin(v1or);
+	float r = 0.15d; //rayon de la boule lancée
 
 	cadre* cadreJeu;
 	cadreJeu = new cadre(contour[0], contour[1], contour[2], contour[3]);
@@ -85,6 +86,20 @@ GLvoid affichage(){
 
     jeu* j;
     j = new jeu(cadreJeu);
+
+    vertex vb = { 0.6f, 0.6f };
+		boule* b1;
+		b1 = new boule(0.2f, vb);
+
+		vertex vb1 = { -0.6f, -0.6f };
+		boule* b2;
+		b2 = new boule(0.2f, vb1);
+
+		j->addBoule(b1);
+		j->addBoule(b2);
+
+		int ind = j->AimBoule(v1, r);
+		cout << "in main : AimBoule : indice de la boule visée : " << ind<< endl<<endl ;
 
 
 
@@ -117,7 +132,6 @@ GLvoid affichage(){
 
 		//vr->afficherGL();
 
-		int idbord = 0;
 		cadreJeu->afficherVecteursGL();
 		cadreJeu->afficherGL();
 
@@ -130,16 +144,15 @@ GLvoid affichage(){
 
 		//boules
 
-		vertex vb = { 0.6f, 0.6f };
-		boule* b1;
-		b1 = new boule(0.2f, vb);
+
 		glLineWidth(1.0f);
 		b1->afficherGL();
+		b2->afficherGL();
 
 		//intersection avec la boule
 		vertex interBoule;
 		bool binter = false;
-		float r = 0.15d;
+
 		cout << "-- intersections de boules --" << endl;
 		binter = b1->getIntersection(v1, r , interBoule);
 

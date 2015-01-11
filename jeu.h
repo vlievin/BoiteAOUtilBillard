@@ -20,6 +20,7 @@ std::vector<boule*> getBoules() const;
 cadre* getCadre() const;
 void addBoule(boule* b);
 int AimBoule(myVecteur2D* v , float r) const; // retourne l'indice de la boule percutée s'il y en a une , -1 sinon
+void afficherGL() const;
 
 };
 

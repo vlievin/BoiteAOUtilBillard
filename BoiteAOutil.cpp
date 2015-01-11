@@ -449,6 +449,21 @@ int intersectionDroites( myVecteur2D* v1, myVecteur2D* v2, vertex& sol) {
 	}
 }
 
+int intersectionDroiteBoule(myVecteur2D* v1 , myVecteur2D* v2, float r , vertex& sol){ // v2 représente le vecteur directeur d'un bord
+
+return intersectionDroites(v1, v2, sol); // on utilise la fonction précédente
+
+// on va créer un vecteur perpendiculaire au bord pour pouvor placer le centre de la boule lors du rayon
+float ps = produitscalaire(v1, v2);
+
+float vxortho = v1->getxdir() - ps * v2->getxdir();
+float vyortho = v2->getydir() - ps * v2->getydir();
+
+sol.x += r * vxortho;
+sol.y += r * vyortho;
+
+
+}
 
 float produitscalaire(myVecteur2D* v1, myVecteur2D* v2){
 
